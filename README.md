@@ -1,4 +1,4 @@
-<h1 align="center">Stisla On Laravel 10</h1>
+<h1 align="center">Sistem Informasi Kos</h1>
 
 ## Table of Contents
 
