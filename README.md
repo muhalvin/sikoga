@@ -24,5 +24,7 @@ Several quick start options are available:
 
 **Stisla** is licensed under the [MIT License](LICENSE)
 
+**SIKOGA** is licensed under the [MIT License](LICENSE)
+
 ---
 
