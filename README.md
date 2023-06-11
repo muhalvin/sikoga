@@ -1,5 +1,4 @@
 <h1 align="center">Stisla On Laravel 10</h1>
----
 
 ## Table of Contents
 
@@ -20,8 +19,10 @@ Several quick start options are available:
 -   Run `php artisan serve`
 -   Finish
 
+
 ## License
 
 **Stisla** is licensed under the [MIT License](LICENSE)
-**SIKOGA** is licensed under the [MIT License](LICENSE)
+
 ---
+
