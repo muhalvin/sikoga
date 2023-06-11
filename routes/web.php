@@ -1,0 +1,90 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PemilikController;
+use App\Http\Controllers\PengurusController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RegisterController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+/*
+ *
+ *  Register Route 
+ * 
+ */
+
+Route::middleware(['guest'])->group(function () {
+    Route::post('prosesRegister', [RegisterController::class, 'create'])->name('prosesRegister');
+    Route::get('register', [RegisterController::class, 'index'])->name('register');
+});
+
+/*
+* 
+* Login Routes
+* 
+*/
+Route::middleware(['guest'])->group(function () {
+    Route::get('/', [LoginController::class, 'index'])->name('login');
+    Route::post('prosesLogin', [LoginController::class, 'prosesLogin'])->name('prosesLogin');
+});
+
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+
+
+/*
+ * 
+ * User Routes
+ * 
+ */
+
+Route::middleware(['auth', 'akses:Anak Kos'])->group(function () {
+    
+    // Dashboard 
+    Route::get('dashboard', [UserController::class, 'index'])->name('dashboard'); 
+    
+});
+
+
+/*
+* 
+* Pengurus Routes
+* 
+ */
+
+Route::group(['prefix' => 'pengurus', 'middleware' => ['auth', 'akses:Pengurus'], 'as' => 'pengurus/'], function(){
+
+    Route::get('dashboard', [PengurusController::class, 'index'])->name('dashboard');
+}); 
+
+
+ /*
+ * 
+ * Pemilik Routes
+ * 
+ */
+
+Route::group(['prefix' => 'pemilik', 'middleware' => ['auth', 'akses:Pemilik'], 'as' => 'pemilik/'], function(){
+
+    Route::get('dashboard', [PemilikController::class, 'index'])->name('dashboard');
+}); 
+
+
+
+
+
+
+
+
+
+Route::view('403', 'errors.403');
