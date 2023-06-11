@@ -51,7 +51,17 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth', 'akses:Anak Kos'])->group(function () {
     
     // Dashboard 
-    Route::get('dashboard', [UserController::class, 'index'])->name('dashboard'); 
+    Route::get('dashboard', [UserController::class, 'index'])->name('dashboard');
+    // Profil
+    Route::get('profile', [UserController::class, 'showProfile'])->name('profile');
+    Route::post('updateProfile', [UserController::class, 'updateProfile'])->name('updateProfile');
+    Route::post('updateFoto', [UserController::class, 'updateFoto'])->name('updateFoto');
+    // Pendaftaran 
+    Route::get('verifikasi', [UserController::class, 'showVerifikasi'])->name('verifikasi');
+    Route::post('createVerifikasi', [UserController::class, 'createVerifikasi'])->name('createVerifikasi');
+    Route::post('updateVerifikasi/{id}', [UserController::class, 'updateVerifikasi'])->name('updateVerifikasi/');
+
+    Route::get('pembayaran', [UserController::class, 'showPembayaran'])->name('pembayaran'); 
     
 });
 
@@ -65,6 +75,11 @@ Route::middleware(['auth', 'akses:Anak Kos'])->group(function () {
 Route::group(['prefix' => 'pengurus', 'middleware' => ['auth', 'akses:Pengurus'], 'as' => 'pengurus/'], function(){
 
     Route::get('dashboard', [PengurusController::class, 'index'])->name('dashboard');
+    // Pendaftaran
+    Route::get('verifikasi', [PengurusController::class, 'showVerifikasi'])->name('verifikasi');
+    Route::get('updateVerifikasi/{id}', [PengurusController::class, 'updateVerifikasi'])->name('updateVerifikasi/');
+    // Pembayaran
+    Route::get('pembayaran', [PengurusController::class, 'showPembayaran'])->name('pembayaran');
 }); 
 
 

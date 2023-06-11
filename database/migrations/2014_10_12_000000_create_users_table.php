@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('kota_asal')->nullable();
             $table->enum('role',['Pengurus', 'Pemilik', 'Anak Kos']);
             $table->string('password');
+            $table->string('foto')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

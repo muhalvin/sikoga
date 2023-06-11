@@ -16,6 +16,12 @@
     <link rel="stylesheet" href="{{ url('assets/modules/owlcarousel2/dist/assets/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ url('assets/modules/owlcarousel2/dist/assets/owl.theme.default.min.css') }}">
 
+    <!-- CSS Datatables Libraries -->
+    <link rel="stylesheet" href="{{ url('assets/modules/datatables/datatables.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ url('assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
+
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ url('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ url('assets/css/components.css') }}">
@@ -71,8 +77,16 @@
     <script src="{{ url('assets/modules/summernote/summernote-bs4.js') }}"></script>
     <script src="{{ url('assets/modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
 
+    {{-- Datatables Libraries --}}
+    <script src="{{ url('assets/modules/datatables/datatables.min.js') }}"></script>
+    <script src="{{ url('assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ url('assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
+    <script src="{{ url('assets/modules/jquery-ui/jquery-ui.min.js') }}"></script>
+
+
     <!-- Page Specific JS File -->
     <script src="{{ url('assets/js/page/index.js') }}"></script>
+    <script src="{{ url('assets/js/page/modules-datatables.js') }}"></script>
 
     <!-- Template JS File -->
     <script src="{{ url('assets/js/scripts.js') }}"></script>
@@ -80,6 +94,8 @@
 
     {{-- sweet alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 
     @if ($message = Session::get('success'))
         <script>

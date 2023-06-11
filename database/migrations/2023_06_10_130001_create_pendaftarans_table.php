@@ -13,14 +13,12 @@ return new class extends Migration
     {
         Schema::create('pendaftarans', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id');
+            $table->string('username');
             $table->string('surat_ket');
-            $table->enum('acc_pengurus', ['1','2','3'])->nullable();
-            $table->enum('acc_pemilik', ['1','2','3'])->nullable();
+            $table->enum('verifikasi', ['1','2','3','4'])->nullable();
             $table->integer('id_kos')->nullable();
             $table->string('bukti_bayar')->nullable();
-            $table->enum('acc_bayar_pengurus', ['1','2','3'])->nullable();
-            $table->enum('acc_bayar_pemilik', ['1','2','3'])->nullable();
+            $table->enum('status_bayar', ['1','2','3'])->nullable();
             $table->timestamps();
         });
     }

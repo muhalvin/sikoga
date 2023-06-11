@@ -2,10 +2,11 @@
 
 @section('main-content')
     <section class="section">
-        <div class="card">
-            <div class="card-header">
-                <h4>Dashboard</h4>
-            </div>
+        <div class="section-header">
+            <h2>Pembayaran</h2>
+        </div>
+        <div class="row">
+
         </div>
     </section>
 @endsection

@@ -27,6 +27,18 @@ class DatabaseSeeder extends Seeder
                 'password'      => Hash::make('pengurus'),
                 'created_at'    => now(),
             ],
+            [
+                'username'      => 'muhalvin',
+                'nama'          => 'Muhammad Alvin',
+                'jk'            => 'L',
+                'tgl_lahir'     => '2000-12-05',
+                'alamat'        => 'Jombang',
+                'no_hp'         => '081358963502',
+                'kota_asal'     => 'Jombang',
+                'role'          => 'Anak Kos',
+                'password'      => Hash::make('muhalvin'),
+                'created_at'    => now(),
+            ],
         ];
 
         foreach ($userData as $key => $value) {
