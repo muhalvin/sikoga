@@ -50,17 +50,17 @@
                                             </td>
                                             <td>
                                                 @if ($row->verifikasi == 1)
-                                                    <div class="badge badge-warning">Proses</div>
+                                                    <div class="badge badge-warning">Menunggu Verifikasi Pengurus</div>
                                                 @elseif ($row->verifikasi == 2)
-                                                    <div class="badge badge-primary">Menunggu Verifikasi Pemilik</div>
+                                                    <div class="badge badge-primary">Menunggu Verifikasi</div>
                                                 @elseif ($row->verifikasi == 3)
-                                                    <div class="badge badge-success">Pendaftaran Terverifikasi</div>
+                                                    <div class="badge badge-success">Pendaftaran Diterima</div>
                                                 @elseif ($row->verifikasi == 4)
                                                     <div class="badge badge-danger">Pendaftaran Ditolak</div>
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ url('pengurus/tolakVerifikasi') }}/{{ $row->id }}"
+                                                <a href="{{ url('pemilik/tolakVerifikasi') }}/{{ $row->id }}"
                                                     class="btn btn-danger">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
@@ -69,7 +69,7 @@
                                                     </svg>
                                                 </a>
 
-                                                <a href="{{ url('pengurus/updateVerifikasi') }}/{{ $row->id }}"
+                                                <a href="{{ url('pemilik/updateVerifikasi') }}/{{ $row->id }}"
                                                     class="btn btn-success">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
@@ -77,7 +77,6 @@
                                                             d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
                                                     </svg>
                                                 </a>
-
                                             </td>
                                         </tr>
                                     @endforeach

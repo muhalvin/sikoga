@@ -27,7 +27,7 @@ class PengurusController extends Controller
         $riwayat = DB::table('pendaftarans')
             ->select('users.nama', 'pendaftarans.id', 'pendaftarans.surat_ket', 'pendaftarans.verifikasi', 'pendaftarans.created_at')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
-            ->where('pendaftarans.verifikasi', '=', ['2', '3', '4'])
+            ->where('pendaftarans.verifikasi', '!=', 1)
             ->get();
 
         return view('pages.pengurus.pendaftaran.verifikasi.main')->with([
@@ -45,6 +45,18 @@ class PengurusController extends Controller
             ->where('id', '=', $id)
             ->update([
                 'verifikasi'    => 2,
+                'updated_at'    => now(),
+            ]);
+            
+        return redirect()->back()->with('success', 'Data telah diperbarui!');
+    }
+
+    public function tolakVerifikasi(Request $request, $id)
+    {
+        $pendaftaran = DB::table('pendaftarans')
+            ->where('id', '=', $id)
+            ->update([
+                'verifikasi'    => 4,
                 'updated_at'    => now(),
             ]);
             

@@ -56,6 +56,7 @@
             </li>
         </ul>
     </nav>
+    {{-- end of pengurus --}}
 @else
     <div class="navbar-bg"></div>
     <nav class="navbar navbar-expand-lg main-navbar">
@@ -74,7 +75,7 @@
                     <div class="d-sm-none d-lg-inline-block">Hi, {{ Session::get('nama') }}</div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a href="#" class="dropdown-item has-icon">
+                    <a href="{{ url('profile') }}" class="dropdown-item has-icon">
                         <i class="far fa-user"></i> Profile
                     </a>
                     <div class="dropdown-divider"></div>

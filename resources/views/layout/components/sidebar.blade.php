@@ -9,12 +9,26 @@
             </div>
             <ul class="sidebar-menu">
                 <li class="menu-header">Dashboard</li>
-                <li class="">
-                    <a class="nav-link" href="{{ route('pemilik/dashboard') }}"><i class="far fa-square"></i>
-                        <span>Dashboard</span>
+                <li class="{{ $menu == 'Dashboard' ? 'active' : '' }}">
+                    <a href="{{ route('pemilik/dashboard') }}" class="nav-link">
+                        <i class="fas fa-fire"></i><span>Dashboard</span>
                     </a>
                 </li>
 
+                <li class="menu-header">Pendaftaran</li>
+                <li class="dropdown {{ $menu == 'Pendaftaran' ? 'active' : '' }}">
+                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                            class="fas fa-columns"></i>
+                        <span>Pendaftaran</span></a>
+                    <ul class="dropdown-menu">
+                        <li class="{{ $submenu == 'Verifikasi' ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('pemilik/verifikasi') }}">Verifikasi</a>
+                        </li>
+                        <li class="{{ $submenu == 'Pembayaran' ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('pemilik/pembayaran') }}">Pembayaran</a>
+                        </li>
+                    </ul>
+                </li>
 
             </ul>
         </aside>

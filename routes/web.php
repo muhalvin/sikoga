@@ -78,6 +78,7 @@ Route::group(['prefix' => 'pengurus', 'middleware' => ['auth', 'akses:Pengurus']
     // Pendaftaran
     Route::get('verifikasi', [PengurusController::class, 'showVerifikasi'])->name('verifikasi');
     Route::get('updateVerifikasi/{id}', [PengurusController::class, 'updateVerifikasi'])->name('updateVerifikasi/');
+    Route::get('tolakVerifikasi/{id}', [PengurusController::class, 'tolakVerifikasi'])->name('tolakVerifikasi/');
     // Pembayaran
     Route::get('pembayaran', [PengurusController::class, 'showPembayaran'])->name('pembayaran');
 }); 
@@ -92,6 +93,12 @@ Route::group(['prefix' => 'pengurus', 'middleware' => ['auth', 'akses:Pengurus']
 Route::group(['prefix' => 'pemilik', 'middleware' => ['auth', 'akses:Pemilik'], 'as' => 'pemilik/'], function(){
 
     Route::get('dashboard', [PemilikController::class, 'index'])->name('dashboard');
+     // Pendaftaran
+     Route::get('verifikasi', [PemilikController::class, 'showVerifikasi'])->name('verifikasi');
+     Route::get('updateVerifikasi/{id}', [PemilikController::class, 'updateVerifikasi'])->name('updateVerifikasi/');
+     Route::get('tolakVerifikasi/{id}', [PemilikController::class, 'tolakVerifikasi'])->name('tolakVerifikasi/');
+     // Pembayaran
+     Route::get('pembayaran', [PemilikController::class, 'showPembayaran'])->name('pembayaran');
 }); 
 
 
