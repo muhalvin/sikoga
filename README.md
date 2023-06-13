@@ -1,4 +1,4 @@
-<h1 align="center">Sistem Informasi Kos</h1>
+<h1 align="center">Sistem Informasi Kos ------</h1>
 
 ## Table of Contents
 
@@ -23,8 +23,6 @@ Several quick start options are available:
 
 
 ## License
-
-**Stisla** is licensed under the [MIT License](LICENSE)
 
 **SIKOGA** is licensed under the [MIT License](LICENSE)
 
