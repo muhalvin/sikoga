@@ -324,15 +324,24 @@ class UserController extends Controller
         $kos = DB::table('pendaftarans')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
             ->where('users.username', '=', Auth::user()->username)
-            ->first();    
+            ->first();   
+            
+        $pendaftaran = DB::table('pendaftarans')
+            ->where('username', '=', Auth::user()->username)
+            ->where('status_bayar', '=', '3')
+            ->first();
 
-        return view('pages.user.tagihan.main')->with([
-            'title'     => 'Tagihan',
-            'menu'      => 'Tagihan',
-            'submenu'   => '',
-            'riwayat'   => $riwayat,
-            'kos'       => $kos->id_kos,
-        ]);
+        if ($pendaftaran) {
+            return view('pages.user.tagihan.main')->with([
+                'title'     => 'Tagihan',
+                'menu'      => 'Tagihan',
+                'submenu'   => '',
+                'riwayat'   => $riwayat,
+                'kos'       => $kos->id_kos,
+            ]);
+        } else {
+            return view('errors.403');
+        } 
     }
 
     public function storeTagihan(Request $request)
