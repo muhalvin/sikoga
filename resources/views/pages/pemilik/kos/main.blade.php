@@ -21,12 +21,10 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <div class="card card-large-icons">
-                        <div class="card-icon bg-primary text-white">
-                            <img class="d-block w-100" alt="Foto Diri"
-                                src="{{ url('storage/profiles/pict/') }}/{{ $item->f_depan }}"
-                                style="max-height: 25vh; max-width: 25vh;"
-                                onerror="this.onerror=null; this.src='{{ url('assets/img/default/default.jpg') }}'">
-                        </div>
+
+                        <img alt="Foto Depan" src="{{ url('storage/KOS/Foto') }}/{{ $item->f_depan }}"
+                            style="height: 100%; width: 40vh; margin: auto; border-radius: 0.8vh;"
+                            onerror="this.onerror=null; this.src='{{ url('assets/img/default/default.jpg') }}'">
                         <div class="card-body">
                             <h4>{{ $item->nama_kos }}</h4>
                             <p>{{ $item->alamat }}</p>

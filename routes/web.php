@@ -98,6 +98,7 @@ Route::group(['prefix' => 'pemilik', 'middleware' => ['auth', 'akses:Pemilik'], 
     Route::post('storeKos', [PemilikController::class, 'storeKos'])->name('storeKos');
     Route::get('detail-kos/{id}', [PemilikController::class, 'detailKos'])->name('detail-kos/');
     Route::post('update-kos/{id}', [PemilikController::class, 'updateKos'])->name('update-kos/');
+    Route::post('update-fotoKos/{id}', [PemilikController::class, 'updateFotoKos'])->name('update-fotoKos/');
      // Pendaftaran
      Route::get('verifikasi', [PemilikController::class, 'showVerifikasi'])->name('verifikasi');
      Route::get('updateVerifikasi/{id}', [PemilikController::class, 'updateVerifikasi'])->name('updateVerifikasi/');
