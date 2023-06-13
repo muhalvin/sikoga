@@ -25,7 +25,7 @@
                                                 <img class="d-block w-100" alt="Foto Diri"
                                                     src="{{ url('storage/profiles/pict/') }}/{{ $item->foto }}"
                                                     style="min-height: 32vh; max-height: 32vh; border-radius: 1vh;"
-                                                    onerror="this.onerror=null; this.src='{{ url('assets/img/pictures/default-photo.png') }}'">
+                                                    onerror="this.onerror=null; this.src='{{ url('assets/img/default/default.jpg') }}'">
                                             </div>
                                         </div>
                                     </div>

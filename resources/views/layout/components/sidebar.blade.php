@@ -15,6 +15,13 @@
                     </a>
                 </li>
 
+                <li class="menu-header">KOS</li>
+                <li class="{{ $menu == 'Kos' ? 'active' : '' }}">
+                    <a href="{{ route('pemilik/kos') }}" class="nav-link">
+                        <i class="fas fa-home"></i><span>Setting Kos</span>
+                    </a>
+                </li>
+
                 <li class="menu-header">Pendaftaran</li>
                 <li class="dropdown {{ $menu == 'Pendaftaran' ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
@@ -23,9 +30,6 @@
                     <ul class="dropdown-menu">
                         <li class="{{ $submenu == 'Verifikasi' ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('pemilik/verifikasi') }}">Verifikasi</a>
-                        </li>
-                        <li class="{{ $submenu == 'Pembayaran' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('pemilik/pembayaran') }}">Pembayaran</a>
                         </li>
                     </ul>
                 </li>
@@ -58,9 +62,6 @@
                     <ul class="dropdown-menu">
                         <li class="{{ $submenu == 'Verifikasi' ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('pengurus/verifikasi') }}">Verifikasi</a>
-                        </li>
-                        <li class="{{ $submenu == 'Pembayaran' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('pengurus/pembayaran') }}">Pembayaran</a>
                         </li>
                     </ul>
                 </li>
@@ -105,7 +106,7 @@
                             <a class="nav-link" href="{{ route('verifikasi') }}">Verifikasi</a>
                         </li>
                         <li class="{{ $submenu == 'Pembayaran' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('pembayaran') }}">Pembayaran</a>
+                            <a class="nav-link" href="{{ route('pembayaran') }}">Pilih Kos</a>
                         </li>
                     </ul>
                 </li>

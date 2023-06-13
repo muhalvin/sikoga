@@ -126,6 +126,7 @@ class UserController extends Controller
         
         $pendaftaran = DB::table('pendaftarans')
             ->where('username', '=', Auth::user()->username)
+            ->orderBy('id', 'DESC')
             ->get();
             
         return view('pages.user.pendaftaran.verifikasi.main')->with([

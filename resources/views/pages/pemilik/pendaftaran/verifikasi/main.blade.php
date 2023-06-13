@@ -4,7 +4,7 @@
     <section class="section">
         <div class="card">
             <div class="card-header">
-                <h4>Verifikasi Pendaftaran</h4>
+                <h4>Pendaftaran</h4>
             </div>
         </div>
 

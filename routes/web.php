@@ -93,12 +93,15 @@ Route::group(['prefix' => 'pengurus', 'middleware' => ['auth', 'akses:Pengurus']
 Route::group(['prefix' => 'pemilik', 'middleware' => ['auth', 'akses:Pemilik'], 'as' => 'pemilik/'], function(){
 
     Route::get('dashboard', [PemilikController::class, 'index'])->name('dashboard');
+    // Kos
+    Route::get('kos', [PemilikController::class, 'showKos'])->name('kos');
+    Route::post('storeKos', [PemilikController::class, 'storeKos'])->name('storeKos');
+    Route::get('detail-kos/{id}', [PemilikController::class, 'detailKos'])->name('detail-kos/');
+    Route::post('update-kos/{id}', [PemilikController::class, 'updateKos'])->name('update-kos/');
      // Pendaftaran
      Route::get('verifikasi', [PemilikController::class, 'showVerifikasi'])->name('verifikasi');
      Route::get('updateVerifikasi/{id}', [PemilikController::class, 'updateVerifikasi'])->name('updateVerifikasi/');
      Route::get('tolakVerifikasi/{id}', [PemilikController::class, 'tolakVerifikasi'])->name('tolakVerifikasi/');
-     // Pembayaran
-     Route::get('pembayaran', [PemilikController::class, 'showPembayaran'])->name('pembayaran');
 }); 
 
 
