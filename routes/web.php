@@ -60,8 +60,14 @@ Route::middleware(['auth', 'akses:Anak Kos'])->group(function () {
     Route::get('verifikasi', [UserController::class, 'showVerifikasi'])->name('verifikasi');
     Route::post('createVerifikasi', [UserController::class, 'createVerifikasi'])->name('createVerifikasi');
     Route::post('updateVerifikasi/{id}', [UserController::class, 'updateVerifikasi'])->name('updateVerifikasi/');
-
+    // Pembayaran
     Route::get('pembayaran', [UserController::class, 'showPembayaran'])->name('pembayaran'); 
+    Route::post('storePembayaran', [UserController::class, 'storePembayaran'])->name('storePembayaran'); 
+    Route::post('storePembayaranBulanan', [UserController::class, 'storePembayaranBulanan'])->name('storePembayaranBulanan');
+    // Bayar Kos
+    Route::get('tagihan', [UserController::class, 'showTagihan'])->name('tagihan'); 
+    Route::post('storeTagihan', [UserController::class, 'storeTagihan'])->name('storeTagihan'); 
+
     
 });
 
@@ -81,6 +87,8 @@ Route::group(['prefix' => 'pengurus', 'middleware' => ['auth', 'akses:Pengurus']
     Route::get('tolakVerifikasi/{id}', [PengurusController::class, 'tolakVerifikasi'])->name('tolakVerifikasi/');
     // Pembayaran
     Route::get('pembayaran', [PengurusController::class, 'showPembayaran'])->name('pembayaran');
+    Route::get('tolakPembayaran/{id}', [PengurusController::class, 'tolakPembayaran'])->name('tolakPembayaran/');
+    Route::get('accPembayaran/{id}', [PengurusController::class, 'accPembayaran'])->name('accPembayaran/');
 }); 
 
 
@@ -99,10 +107,14 @@ Route::group(['prefix' => 'pemilik', 'middleware' => ['auth', 'akses:Pemilik'], 
     Route::get('detail-kos/{id}', [PemilikController::class, 'detailKos'])->name('detail-kos/');
     Route::post('update-kos/{id}', [PemilikController::class, 'updateKos'])->name('update-kos/');
     Route::post('update-fotoKos/{id}', [PemilikController::class, 'updateFotoKos'])->name('update-fotoKos/');
-     // Pendaftaran
-     Route::get('verifikasi', [PemilikController::class, 'showVerifikasi'])->name('verifikasi');
-     Route::get('updateVerifikasi/{id}', [PemilikController::class, 'updateVerifikasi'])->name('updateVerifikasi/');
-     Route::get('tolakVerifikasi/{id}', [PemilikController::class, 'tolakVerifikasi'])->name('tolakVerifikasi/');
+    // Pendaftaran
+    Route::get('verifikasi', [PemilikController::class, 'showVerifikasi'])->name('verifikasi');
+    Route::get('updateVerifikasi/{id}', [PemilikController::class, 'updateVerifikasi'])->name('updateVerifikasi/');
+    Route::get('tolakVerifikasi/{id}', [PemilikController::class, 'tolakVerifikasi'])->name('tolakVerifikasi/');
+    // Pembayaran
+    Route::get('pembayaran', [PemilikController::class, 'showPembayaran'])->name('pembayaran');
+    Route::get('tolakPembayaran/{id}', [PemilikController::class, 'tolakPembayaran'])->name('tolakPembayaran/');
+    Route::get('accPembayaran/{id}', [PemilikController::class, 'accPembayaran'])->name('accPembayaran/');
 }); 
 
 

@@ -21,14 +21,15 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <div class="card card-large-icons">
-
                         <img alt="Foto Depan" src="{{ url('storage/KOS/Foto') }}/{{ $item->f_depan }}"
-                            style="height: 100%; width: 40vh; margin: auto; border-radius: 0.8vh;"
+                            style="height: 100; max-width: 40vh; margin: auto; border-radius: 0.2vh;"
                             onerror="this.onerror=null; this.src='{{ url('assets/img/default/default.jpg') }}'">
                         <div class="card-body">
                             <h4>{{ $item->nama_kos }}</h4>
                             <p>{{ $item->alamat }}</p>
-                            <a href="{{ url('pemilik/detail-kos') }}/{{ $item->id }}" class="card-cta">Lihat detail
+
+                            <a href="{{ url('pemilik/detail-kos') }}/{{ $item->id }}" class="btn btn-primary">
+                                Lihat detail
                                 <i class="fas fa-chevron-right"></i>
                             </a>
                         </div>

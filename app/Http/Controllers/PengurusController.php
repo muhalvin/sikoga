@@ -65,10 +65,48 @@ class PengurusController extends Controller
 
     public function showPembayaran()
     {
+        $pendaftaran = DB::table('pendaftarans')
+            ->select('pendaftarans.id', 'pendaftarans.updated_at', 'pendaftarans.bukti_bayar', 'pendaftarans.status_bayar', 'users.nama')
+            ->join('users', 'users.username', '=', 'pendaftarans.username')
+            ->where('pendaftarans.status_bayar', '=', 1)
+            ->get();
+
+        $selesai = DB::table('pendaftarans')
+            ->join('users', 'users.username', '=', 'pendaftarans.username')
+            ->where('pendaftarans.status_bayar', '!=', 1)
+            ->orWhere('pendaftarans.status_bayar', '=', NULL)
+            ->get();
+
         return view('pages.pengurus.pendaftaran.pembayaran.main')->with([
             'title'     => 'Pembayaran',
-            'menu'      => 'Pendaftaran',
+            'menu'      => 'Pembayaran',
             'submenu'   => 'Pembayaran',
+            'daftar'    => $pendaftaran,
+            'riwayat'   => $selesai,
         ]);
+    }
+
+    public function accPembayaran($id)
+    {
+        $pendaftaran = DB::table('pendaftarans')
+            ->where('id', '=', $id)
+            ->update([
+                'status_bayar'  => 2,
+                'updated_at'    => now(),
+            ]);
+            
+        return redirect()->back()->with('success', 'Pembayaran diverifikasi!');
+    }
+
+    public function tolakPembayaran($id)
+    {
+        $pendaftaran = DB::table('pendaftarans')
+            ->where('id', '=', $id)
+            ->update([
+                'status_bayar'  => NULL,
+                'updated_at'    => now(),
+            ]);
+            
+        return redirect()->back()->with('success', 'Pembayaran ditolak!');
     }
 }

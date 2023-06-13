@@ -32,7 +32,7 @@
                                     @enderror
                                     <img class="d-block w-100" alt="Foto Diri"
                                         src="{{ url('storage/KOS/Foto') }}/{{ $item->f_depan }}"
-                                        style="height: 100%; max-height: 25vh; width: 20vh;"
+                                        style="height: 100%; max-height: 28vh; width: 20vh;"
                                         onerror="this.onerror=null; this.src='{{ url('assets/img/default/default.jpg') }}'">
                                 </div>
                                 <div class="col-md-4 col-lg-4 mb-5">
@@ -44,7 +44,7 @@
                                     @enderror
                                     <img class="d-block w-100" alt="Foto Diri"
                                         src="{{ url('storage/KOS/Foto') }}/{{ $item->f_samping }}"
-                                        style="height: 100%; max-height: 25vh; width: 20vh; "
+                                        style="height: 100%; max-height: 28vh; width: 20vh; "
                                         onerror="this.onerror=null; this.src='{{ url('assets/img/default/default.jpg') }}'">
                                 </div>
                                 <div class="col-md-4 col-lg-4 mb-5">
@@ -56,7 +56,7 @@
                                     @enderror
                                     <img class="d-block w-100" alt="Foto Diri"
                                         src="{{ url('storage/KOS/Foto') }}/{{ $item->f_kamar_1 }}"
-                                        style="height: 100%; max-height: 25vh; width: 20vh; "
+                                        style="height: 100%; max-height: 28vh; width: 20vh; "
                                         onerror="this.onerror=null; this.src='{{ url('assets/img/default/default.jpg') }}'">
                                 </div>
                                 <div class="col-md-4 col-lg-4 mb-5">
@@ -68,7 +68,7 @@
                                     @enderror
                                     <img class="d-block w-100" alt="Foto Diri"
                                         src="{{ url('storage/KOS/Foto') }}/{{ $item->f_kamar_2 }}"
-                                        style="height: 100%; max-height: 25vh; width: 20vh; "
+                                        style="height: 100%; max-height: 28vh; width: 20vh; "
                                         onerror="this.onerror=null; this.src='{{ url('assets/img/default/default.jpg') }}'">
                                 </div>
                                 <div class="col-md-4 col-lg-4 mb-5">
@@ -80,7 +80,7 @@
                                     @enderror
                                     <img class="d-block w-100" alt="Foto Diri"
                                         src="{{ url('storage/KOS/Foto') }}/{{ $item->f_kamar_3 }}"
-                                        style="height: 100%; max-height: 25vh; width: 20vh; "
+                                        style="height: 100%; max-height: 28vh; width: 20vh; "
                                         onerror="this.onerror=null; this.src='{{ url('assets/img/default/default.jpg') }}'">
                                 </div>
                             </div>

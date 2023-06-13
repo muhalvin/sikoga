@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\kos;
+use App\Models\pendaftaran;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -235,10 +237,145 @@ class UserController extends Controller
 
     public function showPembayaran()
     {
+
+        $kos = DB::table('kos')
+            ->get();
+
+        $verified = DB::table('pendaftarans')
+            ->where('username', '=', Auth::user()->username)
+            ->where('verifikasi', '=', 3)
+            ->where('status_bayar', '=', NULL)
+            ->orWhere('status_bayar', '!=', 3)
+            ->first();
+
+        $verified2 = DB::table('pendaftarans')
+            ->where('username', '=', Auth::user()->username)
+            ->where('verifikasi', '=', 3)
+            ->where('status_bayar', '=', 3)
+            ->first();
+
+        $pendaftaran = DB::table('pendaftarans')
+            ->select('pendaftarans.bukti_bayar', 'kos.nama_kos', 'users.nama', 'pendaftarans.status_bayar')
+            ->join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
+            ->join('users', 'users.username', '=', 'kos.username')
+            ->where('pendaftarans.username', '=', Auth::user()->username)
+            ->get();    
+
         return view('pages.user.pendaftaran.pembayaran.main')->with([
             'title'     => 'Pembayaran',
             'menu'      => 'Pendaftaran',
-            'submenu'   => 'Pembayaran',   
+            'submenu'   => 'Pembayaran',
+            'kos'       => $kos, 
+            'verif'     => $verified,  
+            'verify'    => $verified2,  
+            'daftar'    => $pendaftaran,  
         ]);
     }
+
+    public function storePembayaran(Request $request)
+    {
+        $validates = Validator::make($request->all(), [
+            'kos_id'            => 'required|numeric',
+            'bukti_bayar'       => 'required|mimes:png,jpg,jpeg|max:2048',
+        ],
+        [
+            'kos_id.required'       => 'Kolom harus diisi!',
+            'bukti_bayar.required'  => 'Kolom harus diisi!',
+            
+            'bukti_bayar.max'       => 'Ukuran Maksimal 2 MB',
+        ]);
+
+        $errors = $validates->errors();
+
+        if ($validates->fails()) {
+            return redirect()->back()->withErrors($validates->messages())->withInput();
+
+        } else { 
+
+            $file   = $request->file('bukti_bayar');
+            
+            $name   = date('Y-m-d').('-').$file->getClientOriginalName();
+            
+            $path   = 'Pembayaran/'.$name;                   
+
+            Storage::disk('public')->put($path, file_get_contents($file));
+        
+        
+        $user = DB::table('pendaftarans')
+            ->where('username', '=', Auth::user()->username)
+            ->update([
+                'id_kos'        => $request->kos_id,
+                'bukti_bayar'   => $name,
+                'status_bayar'  => 1,
+                'updated_at'    => now(),
+            ]);
+
+        return redirect()->back()->with('success', 'Pembayaran berhasil diunggah!');
+        }
+    }
+
+    public function showTagihan()
+    {
+        $riwayat = DB::table('tagihans')
+            ->where('username', '=', Auth::user()->username)
+            ->orderBy('id', 'DESC')
+            ->get();
+
+        $kos = DB::table('pendaftarans')
+            ->join('users', 'users.username', '=', 'pendaftarans.username')
+            ->where('users.username', '=', Auth::user()->username)
+            ->first();    
+
+        return view('pages.user.tagihan.main')->with([
+            'title'     => 'Tagihan',
+            'menu'      => 'Tagihan',
+            'submenu'   => '',
+            'riwayat'   => $riwayat,
+            'kos'       => $kos->id_kos,
+        ]);
+    }
+
+    public function storeTagihan(Request $request)
+    {
+        $validates = Validator::make($request->all(), [
+            'id_kos'            => 'required|numeric',
+            'bukti_bayar'       => 'required|mimes:png,jpg,jpeg|max:2048',
+        ],
+        [
+            'id_kos.required'       => 'Kolom harus diisi!',
+            'bukti_bayar.required'  => 'Kolom harus diisi!',
+            
+            'bukti_bayar.max'       => 'Ukuran Maksimal 2 MB',
+        ]);
+
+        $errors = $validates->errors();
+
+        if ($validates->fails()) {
+            return redirect()->back()->withErrors($validates->messages())->withInput();
+
+        } else { 
+
+            $file   = $request->file('bukti_bayar');
+            
+            $name   = date('Y-m-d').('-').$file->getClientOriginalName();
+            
+            $path   = 'Tagihan/KOS/'.$name;                   
+
+            Storage::disk('public')->put($path, file_get_contents($file));
+        
+        
+        $user = DB::table('tagihans')
+            ->insert([
+                'username'      => Auth::user()->username,
+                'id_kos'        => $request->id_kos,
+                'bukti_bayar'   => $name,
+                'status'        => 1,
+                'created_at'    => now(),
+                'updated_at'    => now(),
+            ]);
+
+        return redirect()->back()->with('success', 'Tagihan dibayarkan!');
+        }
+    }
+
 }

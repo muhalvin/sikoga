@@ -50,9 +50,9 @@
                                             </td>
                                             <td>
                                                 @if ($row->status_bayar == 1)
-                                                    <div class="badge badge-warning">Menunggu Verifikasi</div>
+                                                    <div class="badge badge-warning">Menunggu Verifikasi Pengurus</div>
                                                 @elseif ($row->status_bayar == 2)
-                                                    <div class="badge badge-primary">Menunggu Verifikasi Pemilik</div>
+                                                    <div class="badge badge-primary">Menunggu Verifikasi</div>
                                                 @elseif ($row->status_bayar == 3)
                                                     <div class="badge badge-success">Pembayaran Diterima</div>
                                                 @else
@@ -60,7 +60,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ url('pengurus/tolakPembayaran') }}/{{ $row->id }}"
+                                                <a href="{{ url('pemilik/tolakPembayaran') }}/{{ $row->id }}"
                                                     class="btn btn-danger">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
@@ -69,7 +69,7 @@
                                                     </svg>
                                                 </a>
 
-                                                <a href="{{ url('pengurus/accPembayaran') }}/{{ $row->id }}"
+                                                <a href="{{ url('pemilik/accPembayaran') }}/{{ $row->id }}"
                                                     class="btn btn-success">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
@@ -93,7 +93,7 @@
             <div class="col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Riwayat Pendaftaran</h4>
+                        <h4>Riwayat Pembayaran</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

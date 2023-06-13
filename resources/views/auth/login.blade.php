@@ -2,18 +2,21 @@
 
 @section('main-content')
     <section class="section">
-        <div class="container mt-5">
-            <div class="row" style="padding-top: 6vh;">
+        <div class="container">
+            <div class="row" style="padding-top: 0vh;">
                 <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
-
+                    <div class="login-brand">
+                        <img src="{{ url('assets/img/logo.png') }}" alt="logo" width="200"
+                            class="shadow-light rounded-circle">
+                    </div>
                     <div class="card card-primary">
                         <div class="card-header" style="text-align: center; justify-content: center;">
                             <h4>Masukkan username dan password</h4>
                         </div>
 
                         <div class="card-body">
-
-                            <form method="POST" action="{{ route('prosesLogin') }}" class="needs-validation" novalidate="">
+                            <form method="POST" action="{{ route('prosesLogin') }}" class="needs-validation"
+                                novalidate="">
                                 @csrf
                                 <div class="form-group">
                                     <label for="username">Username</label>
@@ -44,11 +47,10 @@
                             </form>
                         </div>
                     </div>
-                    <div class="mt-5 text-muted text-center">
+                    <div class="mt-3 text-muted text-center">
                         Belum punya akun? <a href="{{ route('register') }}">Create One</a>
                     </div>
                     <div class="simple-footer">
-                        Copyright &copy; Stisla 2018 - {{ date('Y') }}
                     </div>
                 </div>
             </div>

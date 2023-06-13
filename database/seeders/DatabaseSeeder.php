@@ -43,5 +43,9 @@ class DatabaseSeeder extends Seeder
         foreach ($userData as $key => $value) {
             User::create($value);
         }
+
+        User::factory()
+            ->count(50)
+            ->create();
     }
 }
