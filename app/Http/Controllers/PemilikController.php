@@ -269,6 +269,7 @@ class PemilikController extends Controller
             ->join('users', 'users.username', '=', 'pendaftarans.username')
             ->where('pendaftarans.verifikasi', '=', 3)
             ->orWhere('pendaftarans.verifikasi', '=', 4)
+            ->orderByDesc('pendaftarans.id')
             ->get();
 
         return view('pages.pemilik.pendaftaran.verifikasi.main')->with([
@@ -315,12 +316,12 @@ class PemilikController extends Controller
         $selesai = DB::table('pendaftarans')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
             ->where('pendaftarans.status_bayar', '=', 3)
-            ->orWhere('pendaftarans.status_bayar', '=', NULL)
+            ->orderByDesc('pendaftarans.id')
             ->get();
 
         return view('pages.pemilik.pendaftaran.pembayaran.main')->with([
             'title'     => 'Pembayaran',
-            'menu'      => 'Pembayaran',
+            'menu'      => 'Pendaftaran',
             'submenu'   => 'Pembayaran',
             'daftar'    => $pendaftaran,
             'riwayat'   => $selesai,
@@ -345,6 +346,60 @@ class PemilikController extends Controller
             ->where('id', '=', $id)
             ->update([
                 'status_bayar'  => NULL,
+                'updated_at'    => now(),
+            ]);
+            
+        return redirect()->back()->with('success', 'Pembayaran ditolak!');
+    }
+
+    public function showTagihan()
+    {
+        $now = DB::table('tagihans')
+            ->select('users.nama', 'users.username', 'tagihans.id', 'tagihans.created_at', 'tagihans.bukti_bayar', 'tagihans.status')
+            ->join('users', 'users.username', '=', 'tagihans.username')
+            ->join('kos', 'kos.id', '=', 'tagihans.id_kos')
+            ->join('pendaftarans', 'pendaftarans.id_kos', '=', 'tagihans.id_kos')
+            ->where('tagihans.status', '=', 1)
+            ->where('kos.username', '=', Auth::user()->username)
+            ->get();
+
+        $done = DB::table('tagihans')
+            ->select('users.nama', 'users.username', 'tagihans.id', 'tagihans.created_at', 'tagihans.bukti_bayar', 'tagihans.status')
+            ->join('users', 'users.username', '=', 'tagihans.username')
+            ->join('kos', 'kos.id', '=', 'tagihans.id_kos')
+            ->join('pendaftarans', 'pendaftarans.id_kos', '=', 'tagihans.id_kos')
+            ->where('tagihans.status', '!=', 1)
+            ->where('kos.username', '=', Auth::user()->username)
+            ->orderByDesc('tagihans.id')
+            ->get();
+
+        return view('pages.pemilik.tagihan.main')->with([
+            'title'     => 'Tagihan',
+            'menu'      => 'Tagihan',
+            'submenu'   => '',
+            'tagihan'   => $now,
+            'riwayat'   => $done,
+        ]);
+    }
+
+    public function accTagihan ($id)
+    {
+        $pendaftaran = DB::table('tagihans')
+            ->where('id', '=', $id)
+            ->update([
+                'status'        => 2,
+                'updated_at'    => now(),
+            ]);
+            
+        return redirect()->back()->with('success', 'Pembayaran diverifikasi!');
+    }
+
+    public function tolakTagihan ($id)
+    {
+        $pendaftaran = DB::table('tagihans')
+            ->where('id', '=', $id)
+            ->update([
+                'status'        => 3,
                 'updated_at'    => now(),
             ]);
             

@@ -28,6 +28,7 @@ class PengurusController extends Controller
             ->select('users.nama', 'pendaftarans.id', 'pendaftarans.surat_ket', 'pendaftarans.verifikasi', 'pendaftarans.created_at')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
             ->where('pendaftarans.verifikasi', '!=', 1)
+            ->orderByDesc('pendaftarans.id')
             ->get();
 
         return view('pages.pengurus.pendaftaran.verifikasi.main')->with([
@@ -74,12 +75,12 @@ class PengurusController extends Controller
         $selesai = DB::table('pendaftarans')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
             ->where('pendaftarans.status_bayar', '!=', 1)
-            ->orWhere('pendaftarans.status_bayar', '=', NULL)
+            ->orderByDesc('pendaftarans.id')
             ->get();
 
         return view('pages.pengurus.pendaftaran.pembayaran.main')->with([
             'title'     => 'Pembayaran',
-            'menu'      => 'Pembayaran',
+            'menu'      => 'Pendaftaran',
             'submenu'   => 'Pembayaran',
             'daftar'    => $pendaftaran,
             'riwayat'   => $selesai,

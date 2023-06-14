@@ -9,11 +9,14 @@
         </div>
         <div class="section-body">
 
-            <div class="mt-3 mb-3">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                    Buat Pendaftaran Baru
-                </button>
-            </div>
+            @if ($verify)
+            @else
+                <div class="mt-3 mb-3">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        Buat Pendaftaran Baru
+                    </button>
+                </div>
+            @endif
             @foreach ($pendaftaran as $item)
                 <div class="card">
                     <form action="{{ url('updateVerifikasi') }}/{{ $item->id }}" method="POST"

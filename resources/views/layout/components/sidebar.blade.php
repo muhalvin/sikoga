@@ -31,19 +31,17 @@
                         <li class="{{ $submenu == 'Verifikasi' ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('pemilik/verifikasi') }}">Verifikasi</a>
                         </li>
+                        <li class="{{ $submenu == 'Pembayaran' ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('pemilik/pembayaran') }}">Pembayaran Pertama</a>
+                        </li>
                     </ul>
                 </li>
 
-                <li class="menu-header">Pembayaran</li>
-                <li class="dropdown {{ $menu == 'Pembayaran' ? 'active' : '' }}">
-                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                            class="fas fa-columns"></i>
-                        <span>Pembayaran</span></a>
-                    <ul class="dropdown-menu">
-                        <li class="{{ $submenu == 'Pembayaran' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('pemilik/pembayaran') }}">Verifikasi</a>
-                        </li>
-                    </ul>
+                <li class="menu-header">Tagihan</li>
+                <li class="{{ $menu == 'Tagihan' ? 'active' : '' }}">
+                    <a href="{{ route('pemilik/tagihan') }}" class="nav-link">
+                        <i class="fas fa-file-invoice-dollar"></i><span>Tagihan</span>
+                    </a>
                 </li>
 
             </ul>
@@ -75,17 +73,8 @@
                         <li class="{{ $submenu == 'Verifikasi' ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('pengurus/verifikasi') }}">Verifikasi</a>
                         </li>
-                    </ul>
-                </li>
-
-                <li class="menu-header">Pembayaran</li>
-                <li class="dropdown {{ $menu == 'Pembayaran' ? 'active' : '' }}">
-                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                            class="fas fa-columns"></i>
-                        <span>Pembayaran</span></a>
-                    <ul class="dropdown-menu">
                         <li class="{{ $submenu == 'Pembayaran' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('pengurus/pembayaran') }}">Verifikasi</a>
+                            <a class="nav-link" href="{{ route('pengurus/pembayaran') }}">Pembayaran Pertama</a>
                         </li>
                     </ul>
                 </li>
@@ -115,7 +104,7 @@
                 <li class="menu-header">Profile</li>
                 <li class="{{ $menu == 'Profile' ? 'active' : '' }}">
                     <a href="{{ route('profile') }}" class="nav-link">
-                        <i class="fas fa-fire"></i><span>Profile</span>
+                        <i class="fas fa-user"></i><span>Profile</span>
                     </a>
                 </li>
 
@@ -130,7 +119,7 @@
                             <a class="nav-link" href="{{ route('verifikasi') }}">Verifikasi</a>
                         </li>
                         <li class="{{ $submenu == 'Pembayaran' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('pembayaran') }}">Pembayaran</a>
+                            <a class="nav-link" href="{{ route('pembayaran') }}">Pembayaran Pertama</a>
                         </li>
                     </ul>
                 </li>
@@ -139,7 +128,7 @@
 
                 <li class="{{ $menu == 'Tagihan' ? 'active' : '' }}">
                     <a href="{{ route('tagihan') }}" class="nav-link">
-                        <i class="fas fa-fire"></i><span>Tagihan</span>
+                        <i class="fas fa-file-invoice-dollar"></i><span>Tagihan</span>
                     </a>
                 </li>
             </ul>

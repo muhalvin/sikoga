@@ -15,10 +15,31 @@ class UserController extends Controller
 {
     public function index()
     {
+        $sql = DB::table('kos')
+            ->where('status', '=', 'Tersedia')
+            ->get();
+
         return view('pages.user.dashboard.main')->with([
             'title'     => 'Dashboard',
             'menu'      => 'Dashboard',
             'submenu'   => '',
+            'list'      => $sql,
+        ]);
+    }
+
+    public function showKos($id)
+    {
+        $sql = DB::table('kos')
+            ->join('users', 'users.username', '=', 'kos.username')
+            ->where('kos.status', '=', 'Tersedia')
+            ->where('kos.id', '=', $id)
+            ->get();
+
+        return view('pages.user.dashboard.more')->with([
+            'title'     => 'Dashboard',
+            'menu'      => 'Dashboard',
+            'submenu'   => '',
+            'kos'       => $sql,
         ]);
     }
 
@@ -125,6 +146,11 @@ class UserController extends Controller
     public function showVerifikasi()
     {
         $username = Auth::user()->username;
+
+        $verify = DB::table('pendaftarans')
+            ->where('username', '=', Auth::user()->username)
+            ->orderBy('id', 'DESC')
+            ->first();
         
         $pendaftaran = DB::table('pendaftarans')
             ->where('username', '=', Auth::user()->username)
@@ -137,6 +163,7 @@ class UserController extends Controller
             'submenu'       => 'Verifikasi',
             'username'      => $username, 
             'pendaftaran'   => $pendaftaran,  
+            'verify'        => $verify,  
         ]);
     }
 
@@ -386,5 +413,4 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Tagihan dibayarkan!');
         }
     }
-
 }

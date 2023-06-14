@@ -56,6 +56,7 @@ class LoginController extends Controller
                 Session::put('username', $user->username);
                 Session::put('nama', $user->nama);
                 Session::put('role', $user->role);
+                Session::put('jk', $user->jk);
                 
                 return redirect()->route('dashboard')->with('success', 'Anda berhasil login');
                 

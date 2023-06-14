@@ -52,6 +52,7 @@ Route::middleware(['auth', 'akses:Anak Kos'])->group(function () {
     
     // Dashboard 
     Route::get('dashboard', [UserController::class, 'index'])->name('dashboard');
+    Route::get('showKos/{id}', [UserController::class, 'showKos'])->name('showKos/');
     // Profil
     Route::get('profile', [UserController::class, 'showProfile'])->name('profile');
     Route::post('updateProfile', [UserController::class, 'updateProfile'])->name('updateProfile');
@@ -115,6 +116,10 @@ Route::group(['prefix' => 'pemilik', 'middleware' => ['auth', 'akses:Pemilik'], 
     Route::get('pembayaran', [PemilikController::class, 'showPembayaran'])->name('pembayaran');
     Route::get('tolakPembayaran/{id}', [PemilikController::class, 'tolakPembayaran'])->name('tolakPembayaran/');
     Route::get('accPembayaran/{id}', [PemilikController::class, 'accPembayaran'])->name('accPembayaran/');
+    // Tagihan
+    Route::get('tagihan', [PemilikController::class, 'showTagihan'])->name('tagihan');
+    Route::get('tolakTagihan/{id}', [PemilikController::class, 'tolakTagihan'])->name('tolakTagihan/');
+    Route::get('accTagihan/{id}', [PemilikController::class, 'accTagihan'])->name('accTagihan/');
 }); 
 
 
