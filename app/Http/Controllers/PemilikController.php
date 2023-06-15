@@ -364,7 +364,8 @@ class PemilikController extends Controller
             ->get();
 
         $done = DB::table('tagihans')
-            ->select('users.nama', 'users.username', 'tagihans.id', 'tagihans.created_at', 'tagihans.bukti_bayar', 'tagihans.status')
+            ->select('users.nama', 'users.username', 'tagihans.id', 'tagihans.created_at', 'tagihans.bukti_bayar', 'tagihans.status', 'kos.nama_kos')
+            ->distinct()
             ->join('users', 'users.username', '=', 'tagihans.username')
             ->join('kos', 'kos.id', '=', 'tagihans.id_kos')
             ->join('pendaftarans', 'pendaftarans.id_kos', '=', 'tagihans.id_kos')

@@ -99,6 +99,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
+                                        <th>Kos</th>
                                         <th>Tanggal Bayar</th>
                                         <th>Bukti Bayar</th>
                                         <th>Status</th>
@@ -110,6 +111,9 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
                                                 {{ $row->nama }}
+                                            </td>
+                                            <td>
+                                                {{ $row->nama_kos }}
                                             </td>
                                             <td>
                                                 {{ $row->created_at }}

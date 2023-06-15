@@ -23,18 +23,17 @@
                 </li>
 
                 <li class="menu-header">Pendaftaran</li>
-                <li class="dropdown {{ $menu == 'Pendaftaran' ? 'active' : '' }}">
-                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                            class="fas fa-columns"></i>
-                        <span>Pendaftaran</span></a>
-                    <ul class="dropdown-menu">
-                        <li class="{{ $submenu == 'Verifikasi' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('pemilik/verifikasi') }}">Verifikasi</a>
-                        </li>
-                        <li class="{{ $submenu == 'Pembayaran' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('pemilik/pembayaran') }}">Pembayaran Pertama</a>
-                        </li>
-                    </ul>
+                <li class="{{ $submenu == 'Verifikasi' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('pemilik/verifikasi') }}">
+                        <i class="fas fa-registered"></i>
+                        Verifikasi
+                    </a>
+                </li>
+                <li class="{{ $submenu == 'Pembayaran' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('pemilik/pembayaran') }}">
+                        <i class="fas fa-file-invoice"></i>
+                        Pembayaran
+                    </a>
                 </li>
 
                 <li class="menu-header">Tagihan</li>
@@ -60,25 +59,24 @@
                 <li class="menu-header">Dashboard</li>
                 <li class="{{ $menu == 'Dashboard' ? 'active' : '' }}">
                     <a href="{{ route('pengurus/dashboard') }}" class="nav-link">
-                        <i class="fas fa-fire"></i><span>Dashboard</span>
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
                     </a>
                 </li>
 
                 <li class="menu-header">Pendaftaran</li>
-                <li class="dropdown {{ $menu == 'Pendaftaran' ? 'active' : '' }}">
-                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                            class="fas fa-columns"></i>
-                        <span>Pendaftaran</span></a>
-                    <ul class="dropdown-menu">
-                        <li class="{{ $submenu == 'Verifikasi' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('pengurus/verifikasi') }}">Verifikasi</a>
-                        </li>
-                        <li class="{{ $submenu == 'Pembayaran' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('pengurus/pembayaran') }}">Pembayaran Pertama</a>
-                        </li>
-                    </ul>
+                <li class="{{ $submenu == 'Verifikasi' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('pengurus/verifikasi') }}">
+                        <i class="fas fa-registered"></i>
+                        Verifikasi
+                    </a>
                 </li>
-
+                <li class="{{ $submenu == 'Pembayaran' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('pengurus/pembayaran') }}">
+                        <i class="fas fa-file-invoice"></i>
+                        Pembayaran
+                    </a>
+                </li>
             </ul>
         </aside>
     </div>
@@ -97,7 +95,8 @@
                 <li class="menu-header">Dashboard</li>
                 <li class="{{ $menu == 'Dashboard' ? 'active' : '' }}">
                     <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="fas fa-fire"></i><span>Dashboard</span>
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
                     </a>
                 </li>
 
@@ -109,19 +108,17 @@
                 </li>
 
                 <li class="menu-header">Pendaftaran</li>
-
-                <li class="dropdown {{ $menu == 'Pendaftaran' ? 'active' : '' }}">
-                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                            class="fas fa-columns"></i>
-                        <span>Pendaftaran</span></a>
-                    <ul class="dropdown-menu">
-                        <li class="{{ $submenu == 'Verifikasi' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('verifikasi') }}">Verifikasi</a>
-                        </li>
-                        <li class="{{ $submenu == 'Pembayaran' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('pembayaran') }}">Pembayaran Pertama</a>
-                        </li>
-                    </ul>
+                <li class="{{ $submenu == 'Verifikasi' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('verifikasi') }}">
+                        <i class="fas fa-registered"></i>
+                        Verifikasi
+                    </a>
+                </li>
+                <li class="{{ $submenu == 'Pembayaran' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('pembayaran') }}">
+                        <i class="fas fa-file-invoice"></i>
+                        Pilih Kos
+                    </a>
                 </li>
 
                 <li class="menu-header">Tagihan</li>
