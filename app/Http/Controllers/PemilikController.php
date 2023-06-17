@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\kos;
+use App\Models\pendaftaran;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,10 +15,31 @@ class PemilikController extends Controller
 {
     public function index()
     {
+        $jml_user = User::where('role', '=', 'Anak Kos')
+            ->get();
+        
+        $jml_pengurus = User::where('role', '=', 'Pengurus')
+            ->get();
+
+        $penghuni = pendaftaran::join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
+            ->join('users', 'users.username', '=', 'kos.username')
+            ->where('users.username', '=', Auth::user()->username)
+            ->get();    
+
+        $sql = pendaftaran::join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
+            ->join('users', 'users.username', '=', 'kos.username')
+            ->where('users.username', '=', Auth::user()->username)
+            ->where('pendaftarans.status_bayar', '=', 3)
+            ->get();    
+
         return view('pages.pemilik.dashboard.main')->with([
-            'title'     => 'Dashboard',
-            'menu'      => 'Dashboard',
-            'submenu'   => '',
+            'title'         => 'Dashboard',
+            'menu'          => 'Dashboard',
+            'submenu'       => '',
+            'jml_user'      => $jml_user,
+            'jml_pengurus'  => $jml_pengurus,
+            'penghuni'      => $penghuni,
+            'pendaftar'     => $sql,
         ]);
     }
     
@@ -254,6 +277,24 @@ class PemilikController extends Controller
             ]);
 
         return redirect()->back()->with('success', 'Foto berhasil diunggah!');
+    }
+
+    public function showUsers()
+    {
+        $penghuni = pendaftaran::join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
+            ->select('users.nama', 'users.no_hp' , 'kos.nama_kos', 'pendaftarans.verifikasi')
+            ->join('users', 'users.username', '=', 'pendaftarans.username')
+            ->join('tagihans', 'tagihans.username', '=', 'users.username')
+            ->where('kos.username', '=', Auth::user()->username)
+            ->orderByDesc('kos.nama_kos')
+            ->get();   
+            
+        return view('pages.pemilik.users.main')->with([
+            'title'         => 'Penghuni Kos',
+            'menu'          => 'users',
+            'submenu'       => '',
+            'penghuni'      => $penghuni,
+        ]);
     }
 
     public function showVerifikasi()

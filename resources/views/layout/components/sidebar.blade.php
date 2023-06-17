@@ -22,6 +22,12 @@
                     </a>
                 </li>
 
+                <li class="{{ $menu == 'Users' ? 'active' : '' }}">
+                    <a href="{{ route('pemilik/users') }}" class="nav-link">
+                        <i class="fas fa-users"></i><span>Penghuni Kos</span>
+                    </a>
+                </li>
+
                 <li class="menu-header">Pendaftaran</li>
                 <li class="{{ $submenu == 'Verifikasi' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('pemilik/verifikasi') }}">
