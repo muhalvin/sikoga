@@ -11,34 +11,34 @@
         </form>
         <ul class="navbar-nav navbar-right">
             <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
-                    class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
-                <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                    class="nav-link notification-toggle nav-link-lg" id="beep"><i class="far fa-bell"></i></a>
+                <div class="dropdown-menu dropdown-list dropdown-menu-right" style="height: 40vh;">
                     <div class="dropdown-header">Notifications
                         <div class="float-right">
-                            <a href="#">Mark All As Read</a>
+                            {{-- <a href="#">Mark All As Read</a> --}}
                         </div>
                     </div>
                     <div class="dropdown-list-content dropdown-list-icons">
-                        <a href="{{ route('pemilik/verifikasi') }}" class="dropdown-item dropdown-item-unread">
-                            <div class="dropdown-item-icon bg-primary text-white">
-                                <i class="fas fa-code"></i>
+                        <a href="{{ route('pemilik/verifikasi') }}" class="dropdown-item dropdown-item-unread"
+                            id="notify_hidden">
+                            <div class="dropdown-item-icon bg-primary text-white" id="notify">
                             </div>
                             <div class="dropdown-item-desc">
-                                Pendaftaran perlu di verifikasi!
+                                <div class="time">Terdapat Pendaftaran yang harus di verifikasi</div>
                             </div>
                         </a>
-                        <a href="{{ route('pemilik/pembayaran') }}" class="dropdown-item dropdown-item-unread">
-                            <div class="dropdown-item-icon bg-primary text-white">
-                                <i class="fas fa-code"></i>
+                        <a href="{{ route('pemilik/pembayaran') }}" class="dropdown-item dropdown-item-unread"
+                            id="notify_hiddenly">
+                            <div class="dropdown-item-icon bg-primary text-white" id="payment_notify">
                             </div>
                             <div class="dropdown-item-desc">
-                                Pembayaran perlu di verifikasi!
-                                {{-- <div class="time text-primary">2 Min Ago</div> --}}
+                                <div class="time">Terdapat Pembayaran yang harus di verifikasi</div>
                             </div>
                         </a>
                     </div>
                 </div>
             </li>
+
             <li class="dropdown"><a href="#" data-toggle="dropdown"
                     class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                     <img alt="image" src="{{ url('assets/img/avatar/avatar-1.png') }}" class="rounded-circle mr-1">
@@ -100,7 +100,8 @@
         <ul class="navbar-nav navbar-right">
             <li class="dropdown"><a href="#" data-toggle="dropdown"
                     class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                    <img alt="image" src="{{ url('assets/img/avatar/avatar-1.png') }}" class="rounded-circle mr-1">
+                    <img alt="image" src="{{ url('assets/img/avatar/avatar-1.png') }}"
+                        class="rounded-circle mr-1">
                     <div class="d-sm-none d-lg-inline-block">Hi, {{ Session::get('nama') }}</div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">

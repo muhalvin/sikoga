@@ -13,6 +13,24 @@ use Illuminate\Support\Facades\Validator;
 
 class PemilikController extends Controller
 {
+    public function showNotify()
+    {
+        $notif = pendaftaran::where('verifikasi', '!=', '3')
+            ->where('verifikasi', '!=', '4')
+            ->count();
+        
+        return json_encode($notif);
+    }
+
+    public function showPaymentNotify()
+    {
+        $notif = pendaftaran::where('status_bayar', '!=', '3')
+            ->where('status_bayar', '!=', '4')
+            ->count();
+        
+        return json_encode($notif);
+    }
+
     public function index()
     {
         $jml_user = User::where('role', '=', 'Anak Kos')

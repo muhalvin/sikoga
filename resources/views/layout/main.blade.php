@@ -96,8 +96,49 @@
     {{-- sweet alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    {{-- notifications --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+        integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: "{{ route('pemilik/getNotify') }}",
+                type: "GET",
+                success: function(hasil) {
+                    var obj = $.parseJSON(hasil);
 
+                    $('div#notify').html(obj);
+                    if (obj > 0) {
+                        $('#beep').addClass("beep");
+                    } else {
+                        $("#notify_hidden").css("display", "none");
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: "{{ route('pemilik/getPaymentNotify') }}",
+                type: "GET",
+                success: function(hasil) {
+                    var obj = $.parseJSON(hasil);
+
+                    $('div#payment_notify').html(obj);
+                    if (obj > 0) {
+                        $('#beep').addClass("beep");
+                    } else {
+                        $("#notify_hiddenly").css("display", "none");
+                    }
+                }
+            });
+        });
+    </script>
+    {{-- /notifications --}}
 
     @if ($message = Session::get('success'))
         <script>

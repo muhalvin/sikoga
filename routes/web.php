@@ -122,6 +122,9 @@ Route::group(['prefix' => 'pemilik', 'middleware' => ['auth', 'akses:Pemilik'], 
     Route::get('tagihan', [PemilikController::class, 'showTagihan'])->name('tagihan');
     Route::get('tolakTagihan/{id}', [PemilikController::class, 'tolakTagihan'])->name('tolakTagihan/');
     Route::get('accTagihan/{id}', [PemilikController::class, 'accTagihan'])->name('accTagihan/');
+    // Notifikasi
+    Route::get('getNotify', [PemilikController::class, 'showNotify'])->name('getNotify');
+    Route::get('getPaymentNotify', [PemilikController::class, 'showPaymentNotify'])->name('getPaymentNotify');
 }); 
 
 
