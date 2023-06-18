@@ -29,7 +29,7 @@ class PemilikController extends Controller
         $sql = pendaftaran::join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
             ->join('users', 'users.username', '=', 'kos.username')
             ->where('users.username', '=', Auth::user()->username)
-            ->where('pendaftarans.status_bayar', '=', 3)
+            ->where('pendaftarans.status_bayar', '!=', 3)
             ->get();    
 
         return view('pages.pemilik.dashboard.main')->with([

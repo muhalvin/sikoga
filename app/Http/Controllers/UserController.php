@@ -268,6 +268,15 @@ class UserController extends Controller
         $kos = DB::table('kos')
             ->get();
 
+        $sql = DB::table('kos')
+            ->where('status', '=', 'Tersedia')
+            ->get();   
+            
+        $kos_terdaftar = DB::table('kos')
+            ->join('pendaftarans', 'pendaftarans.id_kos', '=', 'kos.id')
+            ->where('pendaftarans.username', '=', Auth::user()->username)
+            ->get();
+
         $verified = DB::table('pendaftarans')
             ->where('username', '=', Auth::user()->username)
             ->where('verifikasi', '=', 3)
@@ -295,7 +304,9 @@ class UserController extends Controller
             'kos'       => $kos, 
             'verif'     => $verified,  
             'verify'    => $verified2,  
-            'daftar'    => $pendaftaran,  
+            'daftar'    => $pendaftaran,
+            'list'      => $sql,  
+            'kos_in'    => $kos_terdaftar,  
         ]);
     }
 

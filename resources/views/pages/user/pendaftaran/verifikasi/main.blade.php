@@ -69,7 +69,8 @@
                                             </div>
                                         @elseif ($item->verifikasi == 3)
                                             <div class="mt-2">
-                                                <span class="badge badge-success">Pendaftaran Terverifikasi</span>
+                                                <span class="badge badge-success">Pendaftaran anda diterima, Silahkan klik
+                                                    tombol dibawha untuk memilih KOS</span>
                                             </div>
                                         @elseif ($item->verifikasi == 4)
                                             <div class="mt-2">
@@ -77,14 +78,27 @@
                                             </div>
                                         @endif
                                     </div>
+                                    <div class="form-group">
+                                        @if ($item->verifikasi == 3)
+                                            <div class="mt-2">
+                                                <label>Pilih KOS</label>
+                                                <br>
+                                                <a class="btn btn-primary" href="{{ route('pembayaran') }}">Pilih
+                                                    KOS Anda</a>
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-footer text-right" style="margin-top: -2vh;">
-                            <button type="submit" class="btn btn-success"
-                                onclick="return confirm('Proses verifikasi akan dimulai dari awal, anda yakin?')">
-                                Kirim Ulang
-                            </button>
+                            @if ($item->verifikasi == 3)
+                            @else
+                                <button type="submit" class="btn btn-success"
+                                    onclick="return confirm('Proses verifikasi akan dimulai dari awal, anda yakin?')">
+                                    Kirim Ulang
+                                </button>
+                            @endif
                         </div>
                     </form>
                 </div>
