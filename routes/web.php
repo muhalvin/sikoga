@@ -68,6 +68,7 @@ Route::middleware(['auth', 'akses:Anak Kos'])->group(function () {
     // Bayar Kos
     Route::get('tagihan', [UserController::class, 'showTagihan'])->name('tagihan'); 
     Route::post('storeTagihan', [UserController::class, 'storeTagihan'])->name('storeTagihan'); 
+    Route::get('invoice/{id}', [UserController::class, 'showInvoice'])->name('invoice/');
 
     
 });

@@ -29,7 +29,7 @@
                                         <th>No</th>
                                         <th>Nama</th>
                                         <th>Tanggal Bayar</th>
-                                        <th>Bukti Bayar</th>
+                                        <th>Bukti</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -58,9 +58,13 @@
                                                 @if ($row->status == 1)
                                                     <div class="badge badge-warning">Menunggu</div>
                                                 @elseif ($row->status == 2)
-                                                    <div class="badge badge-primary">Pembayaran Diterima</div>
+                                                    <a class="btn btn-success" href="{{ url('invoice') . '/' . $row->id }}">
+                                                        Invoice
+                                                    </a>
                                                 @elseif ($row->status == 3)
-                                                    <div class="badge badge-success">Pembayaran Ditolak</div>
+                                                    <div class="badge badge-danger">Pembayaran Ditolak</div>
+                                                @else
+                                                    -
                                                 @endif
                                             </td>
                                         </tr>

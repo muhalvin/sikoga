@@ -424,4 +424,19 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Tagihan dibayarkan!');
         }
     }
+
+    public function showInvoice($id)
+    {
+        $sql = DB::table('tagihans')
+            ->select('users.nama', 'users.alamat', 'users.no_hp', 'tagihans.id', 'tagihans.updated_at', 'tagihans.status', 'kos.nama_kos', 'kos.alamat as alamat_kos', 'kos.nomor', 'kos.biaya')
+            ->join('kos', 'kos.id', '=', 'tagihans.id_kos')
+            ->join('users', 'users.username', '=', 'tagihans.username')
+            ->where('tagihans.id', '=', $id)
+            ->get();
+
+        return view('pages.user.tagihan.invoice')->with([
+            'title'     => 'Invoice',
+            'invoice'   => $sql,
+        ]);
+    }
 }

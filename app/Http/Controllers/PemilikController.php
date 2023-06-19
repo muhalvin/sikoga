@@ -64,6 +64,7 @@ class PemilikController extends Controller
     public function showKos()
     {
         $kos = DB::table('kos')
+            ->where('username', '=', Auth::user()->username)
             ->get();
 
         return view('pages.pemilik.kos.main')->with([
@@ -369,12 +370,16 @@ class PemilikController extends Controller
         $pendaftaran = DB::table('pendaftarans')
             ->select('pendaftarans.id', 'pendaftarans.updated_at', 'pendaftarans.bukti_bayar', 'pendaftarans.status_bayar', 'users.nama')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
+            ->join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
             ->where('pendaftarans.status_bayar', '=', 2)
+            ->where('kos.username', '=', Auth::user()->username)
             ->get();
 
         $selesai = DB::table('pendaftarans')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
+            ->join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
             ->where('pendaftarans.status_bayar', '=', 3)
+            ->where('kos.username', '=', Auth::user()->username)
             ->orderByDesc('pendaftarans.id')
             ->get();
 
