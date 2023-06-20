@@ -277,14 +277,28 @@ class UserController extends Controller
             ->where('pendaftarans.username', '=', Auth::user()->username)
             ->get();
 
+        $verif = DB::table('pendaftarans')
+            ->where('username', '=', Auth::user()->username)
+            ->where('verifikasi', '=', 3)
+            ->where('id_kos', '=', NULL)
+            ->where('status_bayar', '=', NULL)
+            ->first();
+
+        $verify = DB::table('pendaftarans')
+            ->where('username', '=', Auth::user()->username)
+            ->where('verifikasi', '=', 3)
+            ->where('id_kos', '!=', NULL)
+            ->where('status_bayar', '=', NULL)
+            ->orWhere('status_bayar', '=', 1)
+            ->first();
+
         $verified = DB::table('pendaftarans')
             ->where('username', '=', Auth::user()->username)
             ->where('verifikasi', '=', 3)
-            ->where('status_bayar', '=', NULL)
-            ->orWhere('status_bayar', '!=', 3)
+            ->where('status_bayar', '=', 2)
             ->first();
 
-        $verified2 = DB::table('pendaftarans')
+        $tolak = DB::table('pendaftarans')
             ->where('username', '=', Auth::user()->username)
             ->where('verifikasi', '=', 3)
             ->where('status_bayar', '=', 3)
@@ -302,8 +316,10 @@ class UserController extends Controller
             'menu'      => 'Pendaftaran',
             'submenu'   => 'Pembayaran',
             'kos'       => $kos, 
-            'verif'     => $verified,  
-            'verify'    => $verified2,  
+            'verif'     => $verif,  
+            'verify'    => $verified,  
+            'tolak'     => $tolak,  
+            'verifikasi'=> $verify,  
             'daftar'    => $pendaftaran,
             'list'      => $sql,  
             'kos_in'    => $kos_terdaftar,  
@@ -344,7 +360,7 @@ class UserController extends Controller
             ->update([
                 'id_kos'        => $request->kos_id,
                 'bukti_bayar'   => $name,
-                'status_bayar'  => 1,
+                'status_bayar'  => NULL,
                 'updated_at'    => now(),
             ]);
 
@@ -366,7 +382,7 @@ class UserController extends Controller
             
         $pendaftaran = DB::table('pendaftarans')
             ->where('username', '=', Auth::user()->username)
-            ->where('status_bayar', '=', '3')
+            ->where('status_bayar', '=', '2')
             ->first();
 
         if ($pendaftaran) {

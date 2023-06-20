@@ -49,11 +49,11 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                @if ($row->status_bayar == 1)
+                                                @if ($row->status_bayar == null)
                                                     <div class="badge badge-warning">Menunggu Verifikasi</div>
-                                                @elseif ($row->status_bayar == 2)
+                                                @elseif ($row->status_bayar == 1)
                                                     <div class="badge badge-primary">Menunggu Verifikasi Pemilik</div>
-                                                @elseif ($row->status_bayar == 3)
+                                                @elseif ($row->status_bayar == 2)
                                                     <div class="badge badge-success">Pembayaran Diterima</div>
                                                 @else
                                                     <div class="badge badge-danger">Pembayaran Ditolak</div>
@@ -129,11 +129,11 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                @if ($row->status_bayar == 1)
+                                                @if ($row->status_bayar == null)
                                                     <div class="badge badge-warning">Menunggu</div>
-                                                @elseif ($row->status_bayar == 2)
+                                                @elseif ($row->status_bayar == 1)
                                                     <div class="badge badge-primary">Menunggu Verifikasi Pemilik</div>
-                                                @elseif ($row->status_bayar == 3)
+                                                @elseif ($row->status_bayar == 2)
                                                     <div class="badge badge-success">Pembayaran Diterima</div>
                                                 @else
                                                     <div class="badge badge-danger">Pembayaran Ditolak</div>

@@ -24,8 +24,7 @@ class PemilikController extends Controller
 
     public function showPaymentNotify()
     {
-        $notif = pendaftaran::where('status_bayar', '!=', '3')
-            ->where('status_bayar', '!=', '4')
+        $notif = pendaftaran::where('status_bayar', '=', '1')
             ->count();
         
         return json_encode($notif);
@@ -42,6 +41,7 @@ class PemilikController extends Controller
         $penghuni = pendaftaran::join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
             ->join('users', 'users.username', '=', 'kos.username')
             ->where('users.username', '=', Auth::user()->username)
+            ->where('pendaftarans.status_bayar', '=', 2)
             ->get();    
 
         $sql = pendaftaran::join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
@@ -350,7 +350,7 @@ class PemilikController extends Controller
                 'updated_at'    => now(),
             ]);
             
-        return redirect()->back()->with('success', 'Data telah diperbarui!');
+        return redirect()->back()->with('success', 'Pendaftaran Diterima!');
     }
 
     public function tolakVerifikasi(Request $request, $id)
@@ -362,7 +362,16 @@ class PemilikController extends Controller
                 'updated_at'    => now(),
             ]);
             
-        return redirect()->back()->with('success', 'Data telah diperbarui!');
+        return redirect()->back()->with('failed', 'Pendaftaran Ditolak!');
+    }
+
+    public function deleteVerifikasi(Request $request, $id)
+    {
+        $pendaftaran = DB::table('pendaftarans')
+            ->where('id', '=', $id)
+            ->delete();
+            
+        return redirect()->back()->with('failed', 'Data Berhasil Dihapus!');
     }
 
     public function showPembayaran()
@@ -371,14 +380,15 @@ class PemilikController extends Controller
             ->select('pendaftarans.id', 'pendaftarans.updated_at', 'pendaftarans.bukti_bayar', 'pendaftarans.status_bayar', 'users.nama')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
             ->join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
-            ->where('pendaftarans.status_bayar', '=', 2)
+            ->where('pendaftarans.status_bayar', '=', 1)
             ->where('kos.username', '=', Auth::user()->username)
             ->get();
 
         $selesai = DB::table('pendaftarans')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
             ->join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
-            ->where('pendaftarans.status_bayar', '=', 3)
+            ->where('pendaftarans.status_bayar', '=', 2)
+            ->orWhere('pendaftarans.status_bayar', '=', 3)
             ->where('kos.username', '=', Auth::user()->username)
             ->orderByDesc('pendaftarans.id')
             ->get();
@@ -397,11 +407,11 @@ class PemilikController extends Controller
         $pendaftaran = DB::table('pendaftarans')
             ->where('id', '=', $id)
             ->update([
-                'status_bayar'  => 3,
+                'status_bayar'  => 2,
                 'updated_at'    => now(),
             ]);
             
-        return redirect()->back()->with('success', 'Pembayaran diverifikasi!');
+        return redirect()->back()->with('success', 'Pembayaran Diterima!');
     }
 
     public function tolakPembayaran($id)
@@ -409,11 +419,11 @@ class PemilikController extends Controller
         $pendaftaran = DB::table('pendaftarans')
             ->where('id', '=', $id)
             ->update([
-                'status_bayar'  => NULL,
+                'status_bayar'  => 3,
                 'updated_at'    => now(),
             ]);
             
-        return redirect()->back()->with('success', 'Pembayaran ditolak!');
+        return redirect()->back()->with('failed', 'Pembayaran ditolak!');
     }
 
     public function showTagihan()

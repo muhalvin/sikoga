@@ -2,17 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\pendaftaran;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PengurusController extends Controller
 {
     public function index()
     {
+        $jml_user = User::where('role', '=', 'Anak Kos')
+            ->get();
+        
+        $jml_pengurus = User::where('role', '=', 'Pengurus')
+            ->get();
+
+        $penghuni = pendaftaran::join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
+            ->join('users', 'users.username', '=', 'kos.username')
+            ->where('pendaftarans.status_bayar', '=', 2)
+            ->get();    
+
+        $sql = pendaftaran::join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
+            ->join('users', 'users.username', '=', 'kos.username')
+            ->where('pendaftarans.status_bayar', '!=', 3)
+            ->get();    
+
         return view('pages.pengurus.dashboard.main')->with([
-            'title'     => 'Dashboard',
-            'menu'      => 'Dashboard',
-            'submenu'   => '',
+            'title'         => 'Dashboard',
+            'menu'          => 'Dashboard',
+            'submenu'       => '',
+            'jml_user'      => $jml_user,
+            'jml_pengurus'  => $jml_pengurus,
+            'penghuni'      => $penghuni,
+            'pendaftar'     => $sql,
         ]);
     }
 
@@ -49,7 +72,7 @@ class PengurusController extends Controller
                 'updated_at'    => now(),
             ]);
             
-        return redirect()->back()->with('success', 'Data telah diperbarui!');
+        return redirect()->back()->with('success', 'Pendaftaran Disetujui!');
     }
 
     public function tolakVerifikasi(Request $request, $id)
@@ -61,7 +84,16 @@ class PengurusController extends Controller
                 'updated_at'    => now(),
             ]);
             
-        return redirect()->back()->with('success', 'Data telah diperbarui!');
+        return redirect()->back()->with('failed', 'Pendaftaran Ditolak!');
+    }
+
+    public function deleteVerifikasi(Request $request, $id)
+    {
+        $pendaftaran = DB::table('pendaftarans')
+            ->where('id', '=', $id)
+            ->delete();
+            
+        return redirect()->back()->with('success', 'Data Berhasil Dihapus!');
     }
 
     public function showPembayaran()
@@ -69,12 +101,12 @@ class PengurusController extends Controller
         $pendaftaran = DB::table('pendaftarans')
             ->select('pendaftarans.id', 'pendaftarans.updated_at', 'pendaftarans.bukti_bayar', 'pendaftarans.status_bayar', 'users.nama')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
-            ->where('pendaftarans.status_bayar', '=', 1)
+            ->where('pendaftarans.status_bayar', '=', null)
             ->get();
 
         $selesai = DB::table('pendaftarans')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
-            ->where('pendaftarans.status_bayar', '!=', 1)
+            ->where('pendaftarans.status_bayar', '!=', null)
             ->orderByDesc('pendaftarans.id')
             ->get();
 
@@ -92,11 +124,11 @@ class PengurusController extends Controller
         $pendaftaran = DB::table('pendaftarans')
             ->where('id', '=', $id)
             ->update([
-                'status_bayar'  => 2,
+                'status_bayar'  => 1,
                 'updated_at'    => now(),
             ]);
             
-        return redirect()->back()->with('success', 'Pembayaran diverifikasi!');
+        return redirect()->back()->with('success', 'Pembayaran Diterima!');
     }
 
     public function tolakPembayaran($id)
@@ -104,10 +136,10 @@ class PengurusController extends Controller
         $pendaftaran = DB::table('pendaftarans')
             ->where('id', '=', $id)
             ->update([
-                'status_bayar'  => NULL,
+                'status_bayar'  => 3,
                 'updated_at'    => now(),
             ]);
             
-        return redirect()->back()->with('success', 'Pembayaran ditolak!');
+        return redirect()->back()->with('failed', 'Pembayaran ditolak!');
     }
 }
