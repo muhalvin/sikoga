@@ -51,7 +51,7 @@
             {{-- Sidebar --}}
             @include('layout.components.sidebar')
 
-            <div class="main-content">
+            <div class="main-content" style="min-height: 85vh;">
                 {{-- Content --}}
                 @yield('main-content')
             </div>
@@ -133,6 +133,45 @@
                         $('#beep').addClass("beep");
                     } else {
                         $("#notify_hiddenly").css("display", "none");
+                    }
+                }
+            });
+        });
+    </script>
+
+    {{-- Pengurus --}}
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: "{{ route('pengurus/getNotify') }}",
+                type: "GET",
+                success: function(hasil) {
+                    var obj = $.parseJSON(hasil);
+
+                    $('div#notif_pengurus').html(obj);
+                    if (obj > 0) {
+                        $('#beep').addClass("beep");
+                    } else {
+                        $("#notif_bar").css("display", "none");
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: "{{ route('pengurus/getPaymentNotify') }}",
+                type: "GET",
+                success: function(hasil) {
+                    var obj = $.parseJSON(hasil);
+
+                    $('div#payment_pengurus').html(obj);
+                    if (obj > 0) {
+                        $('#beep').addClass("beep");
+                    } else {
+                        $("#payment_bar").css("display", "none");
                     }
                 }
             });

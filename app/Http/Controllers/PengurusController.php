@@ -10,6 +10,22 @@ use Illuminate\Support\Facades\DB;
 
 class PengurusController extends Controller
 {
+    public function showNotify()
+    {
+        $notif = pendaftaran::where('verifikasi', '=', '1')
+            ->count();
+        
+        return json_encode($notif);
+    }
+
+    public function showPaymentNotify()
+    {
+        $notif = pendaftaran::where('status_bayar', '=', NULL)
+            ->count();
+        
+        return json_encode($notif);
+    }
+
     public function index()
     {
         $jml_user = User::where('role', '=', 'Anak Kos')
@@ -25,8 +41,8 @@ class PengurusController extends Controller
 
         $sql = pendaftaran::join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
             ->join('users', 'users.username', '=', 'kos.username')
-            ->where('pendaftarans.status_bayar', '!=', 3)
-            ->get();    
+            ->where('pendaftarans.verifikasi', '=', 1)
+            ->get();
 
         return view('pages.pengurus.dashboard.main')->with([
             'title'         => 'Dashboard',

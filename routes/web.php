@@ -92,6 +92,9 @@ Route::group(['prefix' => 'pengurus', 'middleware' => ['auth', 'akses:Pengurus']
     Route::get('pembayaran', [PengurusController::class, 'showPembayaran'])->name('pembayaran');
     Route::get('tolakPembayaran/{id}', [PengurusController::class, 'tolakPembayaran'])->name('tolakPembayaran/');
     Route::get('accPembayaran/{id}', [PengurusController::class, 'accPembayaran'])->name('accPembayaran/');
+    // Notifikasi
+    Route::get('getNotify', [PengurusController::class, 'showNotify'])->name('getNotify');
+    Route::get('getPaymentNotify', [PengurusController::class, 'showPaymentNotify'])->name('getPaymentNotify');
 }); 
 
 
