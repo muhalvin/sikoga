@@ -375,6 +375,12 @@ class UserController extends Controller
             ->orderBy('id', 'DESC')
             ->get();
 
+        $biaya = DB::table('pendaftarans')
+            ->join('users', 'users.username', '=', 'pendaftarans.username')
+            ->join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
+            ->where('users.username', '=', Auth::user()->username)
+            ->first();
+
         $kos = DB::table('pendaftarans')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
             ->where('users.username', '=', Auth::user()->username)
@@ -390,6 +396,7 @@ class UserController extends Controller
                 'title'     => 'Tagihan',
                 'menu'      => 'Tagihan',
                 'submenu'   => '',
+                'biaya'     => $biaya->biaya,
                 'riwayat'   => $riwayat,
                 'kos'       => $kos->id_kos,
             ]);
@@ -402,10 +409,14 @@ class UserController extends Controller
     {
         $validates = Validator::make($request->all(), [
             'id_kos'            => 'required|numeric',
+            'tanggal_bayar'     => 'required|string',
+            'total_bayar'       => 'required|string',
             'bukti_bayar'       => 'required|mimes:png,jpg,jpeg|max:2048',
         ],
         [
             'id_kos.required'       => 'Kolom harus diisi!',
+            'tanggal_bayar.required'=> 'Kolom harus diisi!',
+            'total_bayar.required'  => 'Kolom harus diisi!',
             'bukti_bayar.required'  => 'Kolom harus diisi!',
             
             'bukti_bayar.max'       => 'Ukuran Maksimal 2 MB',
@@ -431,20 +442,22 @@ class UserController extends Controller
             ->insert([
                 'username'      => Auth::user()->username,
                 'id_kos'        => $request->id_kos,
+                'tanggal_bayar' => $request->tanggal_bayar,
+                'total_bayar'   => $request->total_bayar,
                 'bukti_bayar'   => $name,
                 'status'        => 1,
                 'created_at'    => now(),
                 'updated_at'    => now(),
             ]);
 
-        return redirect()->back()->with('success', 'Tagihan dibayarkan!');
+        return redirect()->back()->with('success', 'Anda Telah Membayar Tagihan Bulan Ini!');
         }
     }
 
     public function showInvoice($id)
     {
         $sql = DB::table('tagihans')
-            ->select('users.nama', 'users.alamat', 'users.no_hp', 'tagihans.id', 'tagihans.updated_at', 'tagihans.status', 'kos.nama_kos', 'kos.alamat as alamat_kos', 'kos.nomor', 'kos.biaya')
+            ->select('users.nama', 'users.alamat', 'users.no_hp', 'tagihans.id', 'tagihans.tanggal_bayar', 'tagihans.status', 'kos.nama_kos', 'kos.alamat as alamat_kos', 'kos.nomor', 'tagihans.total_bayar')
             ->join('kos', 'kos.id', '=', 'tagihans.id_kos')
             ->join('users', 'users.username', '=', 'tagihans.username')
             ->where('tagihans.id', '=', $id)

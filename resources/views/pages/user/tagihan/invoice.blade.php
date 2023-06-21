@@ -13,6 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
+
     <style>
         body {
             margin-top: 20px;
@@ -82,7 +83,7 @@
                                         </div>
                                         <div class="mt-4">
                                             <h5 class="font-size-15 mb-1">Invoice Date:</h5>
-                                            <p>{{ date('d M, Y', strtotime($item->updated_at)) }}</p>
+                                            <p>{{ $item->tanggal_bayar }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -109,14 +110,14 @@
                                                 <th scope="row">01</th>
                                                 <td>
                                                     <div>
-                                                        <h5 class="text-truncate font-size-14 mb-1">
-                                                            Pembayaran Tagihan KOS
-                                                        </h5>
+                                                        <h6 class="text-truncate mb-1">
+                                                            Tagihan Kos Bulan {{ date('d F Y') }}
+                                                        </h6>
                                                     </div>
                                                 </td>
-                                                <td>@currency($item->biaya)</td>
+                                                <td>@currency($item->total_bayar)</td>
                                                 <td>1 Month</td>
-                                                <td class="text-end">@currency($item->biaya)</td>
+                                                <td class="text-end">@currency($item->total_bayar)</td>
                                             </tr>
                                             <!-- end tr -->
                                             <tr>
@@ -128,7 +129,7 @@
                                             <tr>
                                                 <th scope="row" colspan="4" class="border-0 text-end">Total</th>
                                                 <td class="border-0 text-end">
-                                                    <h6 class="m-0">@currency($item->biaya)</h6>
+                                                    <h6 class="m-0">@currency($item->total_bayar)</h6>
                                                 </td>
                                             </tr>
                                             <!-- end tr -->

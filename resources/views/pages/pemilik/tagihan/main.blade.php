@@ -22,6 +22,7 @@
                                         <th>No</th>
                                         <th>Nama</th>
                                         <th>Tanggal Bayar</th>
+                                        <th>Jumlah Bayar</th>
                                         <th>Bukti Bayar</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -35,7 +36,10 @@
                                                 {{ $row->nama }}
                                             </td>
                                             <td>
-                                                {{ $row->created_at }}
+                                                {{ $row->tanggal_bayar }}
+                                            </td>
+                                            <td>
+                                                @currency($row->total_bayar)
                                             </td>
                                             <td>
                                                 <a href="{{ url('storage/Tagihan/KOS') }}/{{ $row->bukti_bayar }}"
@@ -101,6 +105,7 @@
                                         <th>Nama</th>
                                         <th>Kos</th>
                                         <th>Tanggal Bayar</th>
+                                        <th>Jumlah Bayar</th>
                                         <th>Bukti Bayar</th>
                                         <th>Status</th>
                                     </tr>
@@ -116,7 +121,10 @@
                                                 {{ $row->nama_kos }}
                                             </td>
                                             <td>
-                                                {{ $row->created_at }}
+                                                {{ $row->tanggal_bayar }}
+                                            </td>
+                                            <td>
+                                                @currency($row->total_bayar)
                                             </td>
                                             <td>
                                                 <a href="{{ url('storage/Tagihan/KOS') }}/{{ $row->bukti_bayar }}"

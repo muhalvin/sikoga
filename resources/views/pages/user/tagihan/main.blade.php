@@ -8,10 +8,13 @@
             </div>
         </div>
         <div class="section-body">
-            <div class="mt-3 mb-3">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                    Bayar Tagihan
-                </button>
+            <div class="row mt-3 mb-3">
+                <div class="col-lg-12 col-md-12">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        Bayar Tagihan
+                    </button>
+
+                </div>
             </div>
         </div>
 
@@ -29,6 +32,7 @@
                                         <th>No</th>
                                         <th>Nama</th>
                                         <th>Tanggal Bayar</th>
+                                        <th>Jumlah Bayar</th>
                                         <th>Bukti</th>
                                         <th>Status</th>
                                     </tr>
@@ -41,7 +45,10 @@
                                                 {{ $row->username }}
                                             </td>
                                             <td>
-                                                {{ $row->created_at }}
+                                                {{ $row->tanggal_bayar }}
+                                            </td>
+                                            <td>
+                                                @currency($row->total_bayar)
                                             </td>
                                             <td>
                                                 <a href="{{ url('storage/Tagihan/KOS') }}/{{ $row->bukti_bayar }}"
@@ -58,7 +65,8 @@
                                                 @if ($row->status == 1)
                                                     <div class="badge badge-warning">Menunggu</div>
                                                 @elseif ($row->status == 2)
-                                                    <a class="btn btn-success" href="{{ url('invoice') . '/' . $row->id }}">
+                                                    <a class="btn btn-success" href="{{ url('invoice') . '/' . $row->id }}"
+                                                        target="_blank">
                                                         Invoice
                                                     </a>
                                                 @elseif ($row->status == 3)
@@ -100,6 +108,23 @@
                                     <label>Nama Kos</label>
                                     <input class="form-control" type="text" name="id_kos" value="{{ $kos }}"
                                         required>
+                                    <div class="invalid-feedback">
+                                        Oh no! You should fill this field.
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tanggal Bayar</label>
+                                    <input type="text" class="form-control" name="tanggal_bayar"
+                                        value="{{ date('d F Y') }}" readonly>
+                                    <div class="invalid-feedback">
+                                        Oh no! You should fill this field.
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Total Bayar</label>
+                                    <select class="form-control" name="total_bayar" readonly>
+                                        <option value="{{ $biaya }}">@currency($biaya)</option>
+                                    </select>
                                     <div class="invalid-feedback">
                                         Oh no! You should fill this field.
                                     </div>

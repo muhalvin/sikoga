@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('username');
             $table->integer('id_kos');
+            $table->string('tanggal_bayar');
+            $table->string('total_bayar');
             $table->string('bukti_bayar');
             $table->enum('status', ['1', '2', '3']);
             $table->timestamps();
