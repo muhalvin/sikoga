@@ -140,6 +140,25 @@
         });
     </script>
 
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url: "{{ route('pemilik/getTagihanNotif') }}",
+                type: "GET",
+                success: function(hasil) {
+                    var obj = $.parseJSON(hasil);
+
+                    $('div#tagihan_notif').html(obj);
+                    if (obj > 0) {
+                        $('#beep').addClass("beep");
+                    } else {
+                        $("#tagihanNotif").css("display", "none");
+                    }
+                }
+            });
+        });
+    </script>
+
     {{-- Pengurus --}}
     <script>
         $(document).ready(function() {

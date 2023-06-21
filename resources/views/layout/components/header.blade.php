@@ -35,6 +35,14 @@
                                 <div class="time">Terdapat Pembayaran yang harus di verifikasi</div>
                             </div>
                         </a>
+                        <a href="{{ route('pemilik/tagihan') }}" class="dropdown-item dropdown-item-unread"
+                            id="tagihanNotif">
+                            <div class="dropdown-item-icon bg-primary text-white" id="tagihan_notif">
+                            </div>
+                            <div class="dropdown-item-desc">
+                                <div class="time">Terdapat Tagihan yang harus di verifikasi</div>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </li>
@@ -98,7 +106,8 @@
             </li>
             <li class="dropdown"><a href="#" data-toggle="dropdown"
                     class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                    <img alt="image" src="{{ url('assets/img/avatar/avatar-1.png') }}" class="rounded-circle mr-1">
+                    <img alt="image" src="{{ url('assets/img/avatar/avatar-1.png') }}"
+                        class="rounded-circle mr-1">
                     <div class="d-sm-none d-lg-inline-block">Hi, {{ Session::get('nama') }}</div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">

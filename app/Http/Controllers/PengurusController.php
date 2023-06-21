@@ -21,6 +21,7 @@ class PengurusController extends Controller
     public function showPaymentNotify()
     {
         $notif = pendaftaran::where('status_bayar', '=', NULL)
+            ->where('verifikasi', '=', 3)
             ->count();
         
         return json_encode($notif);
@@ -117,11 +118,13 @@ class PengurusController extends Controller
         $pendaftaran = DB::table('pendaftarans')
             ->select('pendaftarans.id', 'pendaftarans.updated_at', 'pendaftarans.bukti_bayar', 'pendaftarans.status_bayar', 'users.nama')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
+            ->where('pendaftarans.verifikasi', '=', 3)
             ->where('pendaftarans.status_bayar', '=', null)
             ->get();
 
         $selesai = DB::table('pendaftarans')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
+            ->where('pendaftarans.verifikasi', '=', 3)
             ->where('pendaftarans.status_bayar', '!=', null)
             ->orderByDesc('pendaftarans.id')
             ->get();

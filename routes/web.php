@@ -131,6 +131,7 @@ Route::group(['prefix' => 'pemilik', 'middleware' => ['auth', 'akses:Pemilik'], 
     // Notifikasi
     Route::get('getNotify', [PemilikController::class, 'showNotify'])->name('getNotify');
     Route::get('getPaymentNotify', [PemilikController::class, 'showPaymentNotify'])->name('getPaymentNotify');
+    Route::get('getTagihanNotif', [PemilikController::class, 'showTagihanNotif'])->name('getTagihanNotif');
 }); 
 
 

@@ -1,4 +1,4 @@
-<h1 align="center">Sistem Informasi Kos ------</h1>
+<h1 align="center">Sistem Informasi Kos Gadingmangu</h1>
 
 ## Table of Contents
 

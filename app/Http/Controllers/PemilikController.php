@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\kos;
 use App\Models\pendaftaran;
+use App\Models\tagihan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,15 @@ class PemilikController extends Controller
     public function showPaymentNotify()
     {
         $notif = pendaftaran::where('status_bayar', '=', '1')
+            ->where('verifikasi', '=', 3)
+            ->count();
+        
+        return json_encode($notif);
+    }
+
+    public function showTagihanNotif()
+    {
+        $notif = tagihan::where('status', '=', '1')
             ->count();
         
         return json_encode($notif);
@@ -380,6 +390,7 @@ class PemilikController extends Controller
             ->select('pendaftarans.id', 'pendaftarans.updated_at', 'pendaftarans.bukti_bayar', 'pendaftarans.status_bayar', 'users.nama')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
             ->join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
+            ->where('pendaftarans.verifikasi', '=', 3)
             ->where('pendaftarans.status_bayar', '=', 1)
             ->where('kos.username', '=', Auth::user()->username)
             ->get();
@@ -387,6 +398,7 @@ class PemilikController extends Controller
         $selesai = DB::table('pendaftarans')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
             ->join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
+            ->where('pendaftarans.verifikasi', '=', 3)
             ->where('pendaftarans.status_bayar', '=', 2)
             ->orWhere('pendaftarans.status_bayar', '=', 3)
             ->where('kos.username', '=', Auth::user()->username)
