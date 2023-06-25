@@ -368,6 +368,23 @@ class UserController extends Controller
         }
     }
 
+    public function showNota()
+    {
+        $username = Auth::user()->username;
+        
+        $sql = DB::table('pendaftarans')
+            ->select('pendaftarans.id', 'pendaftarans.username', 'pendaftarans.status_bayar as status', 'pendaftarans.created_at as tanggal_bayar', 'kos.biaya as total_bayar', 'kos.alamat', 'kos.nama_kos', 'kos.alamat as alamat_kos', 'kos.biaya', 'kos.nomor', 'users.nama')
+            ->join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
+            ->join('users', 'users.username', '=', 'kos.username')
+            ->where('pendaftarans.username', '=', $username)
+            ->get();
+
+        return view('pages.user.pendaftaran.pembayaran.invoice')->with([
+            'title'     => 'Invoice',
+            'invoice'   => $sql,
+        ]);
+    }
+
     public function showTagihan()
     {
         $riwayat = DB::table('tagihans')

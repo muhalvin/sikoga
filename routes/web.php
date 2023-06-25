@@ -65,6 +65,7 @@ Route::middleware(['auth', 'akses:Anak Kos'])->group(function () {
     Route::get('pembayaran', [UserController::class, 'showPembayaran'])->name('pembayaran'); 
     Route::post('storePembayaran', [UserController::class, 'storePembayaran'])->name('storePembayaran'); 
     Route::post('storePembayaranBulanan', [UserController::class, 'storePembayaranBulanan'])->name('storePembayaranBulanan');
+    Route::get('nota', [UserController::class, 'showNota'])->name('nota');
     // Bayar Kos
     Route::get('tagihan', [UserController::class, 'showTagihan'])->name('tagihan'); 
     Route::post('storeTagihan', [UserController::class, 'storeTagihan'])->name('storeTagihan'); 

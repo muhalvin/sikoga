@@ -82,10 +82,11 @@
             {{-- /Pilih kos --}}
         @elseif($verify)
             {{-- sudah terverifikasi --}}
+
             <div class="section-body">
                 <div class="mt-3 mb-3">
-                    <a class="btn btn-primary" href="{{ route('tagihan') }}">
-                        Bayar Kos
+                    <a class="btn btn-success" href="{{ route('nota') }}" target="_blank">
+                        Lihat Invoice
                     </a>
                 </div>
                 <div class="card">
@@ -143,6 +144,8 @@
                     </div>
                 </div>
             </div>
+
+            {{-- /sudah terverifikasi --}}
         @elseif($verifikasi)
             {{-- Belum diverifikasi --}}
             <div class="section-body">
