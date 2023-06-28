@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('f_kamar_1')->nullable();
             $table->string('f_kamar_2')->nullable();
             $table->string('f_kamar_3')->nullable();
-            $table->enum('status', ['Penuh', 'Tersedia'])->nullable();
+            $table->enum('status', ['Penuh', 'Tersedia'])->default('Tersedia')->nullable();
             $table->timestamps();
         });
     }

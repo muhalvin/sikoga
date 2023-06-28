@@ -16,8 +16,7 @@ class PemilikController extends Controller
 {
     public function showNotify()
     {
-        $notif = pendaftaran::where('verifikasi', '!=', '3')
-            ->where('verifikasi', '!=', '4')
+        $notif = pendaftaran::where('verifikasi', '=', '2')
             ->count();
         
         return json_encode($notif);
@@ -25,8 +24,9 @@ class PemilikController extends Controller
 
     public function showPaymentNotify()
     {
-        $notif = pendaftaran::where('status_bayar', '=', '1')
-            ->where('verifikasi', '=', 3)
+        $notif = pendaftaran::join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
+            ->where('status_bayar', '=', '1')
+            ->where('kos.username', '=', Auth::user()->username)
             ->count();
         
         return json_encode($notif);
@@ -34,7 +34,9 @@ class PemilikController extends Controller
 
     public function showTagihanNotif()
     {
-        $notif = tagihan::where('status', '=', '1')
+        $notif = tagihan::join('kos', 'kos.id', '=', 'tagihans.id_kos')
+            ->where('kos.username', '=', Auth::user()->username)
+            ->where('tagihans.status', '=', '1')
             ->count();
         
         return json_encode($notif);
@@ -49,16 +51,15 @@ class PemilikController extends Controller
             ->get();
 
         $penghuni = pendaftaran::join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
-            ->join('users', 'users.username', '=', 'kos.username')
-            ->where('users.username', '=', Auth::user()->username)
+            ->where('kos.username', '=', Auth::user()->username)
             ->where('pendaftarans.status_bayar', '=', 2)
             ->get();    
 
         $sql = pendaftaran::join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
-            ->join('users', 'users.username', '=', 'kos.username')
-            ->where('users.username', '=', Auth::user()->username)
-            ->where('pendaftarans.verifikasi', '=', 2)
-            ->get();    
+            ->where('kos.username', '=', Auth::user()->username)
+            ->where('pendaftarans.verifikasi', '=', 1)
+            ->orWhere('pendaftarans.verifikasi', '=', 2)
+            ->get();
 
         return view('pages.pemilik.dashboard.main')->with([
             'title'         => 'Dashboard',
@@ -390,7 +391,6 @@ class PemilikController extends Controller
             ->select('pendaftarans.id', 'pendaftarans.updated_at', 'pendaftarans.bukti_bayar', 'pendaftarans.status_bayar', 'users.nama')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
             ->join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
-            ->where('pendaftarans.verifikasi', '=', 3)
             ->where('pendaftarans.status_bayar', '=', 1)
             ->where('kos.username', '=', Auth::user()->username)
             ->get();
@@ -398,9 +398,7 @@ class PemilikController extends Controller
         $selesai = DB::table('pendaftarans')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
             ->join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
-            ->where('pendaftarans.verifikasi', '=', 3)
-            ->where('pendaftarans.status_bayar', '=', 2)
-            ->orWhere('pendaftarans.status_bayar', '=', 3)
+            ->where('pendaftarans.status_bayar', '!=', 1)
             ->where('kos.username', '=', Auth::user()->username)
             ->orderByDesc('pendaftarans.id')
             ->get();

@@ -24,20 +24,31 @@ class DatabaseSeeder extends Seeder
                 'no_hp'         => '08510012345',
                 'kota_asal'     => 'Jakarta',
                 'role'          => 'Pengurus',
-                'password'      => Hash::make('pengurus'),
+                'password'      => Hash::make('password'),
                 'created_at'    => now(),
             ],
             [
-                'username'      => 'pemilik',
-                'nama'          => 'Pemilik Kos',
+                'username'      => 'andana',
+                'nama'          => 'Andana',
                 'jk'            => 'L',
                 'alamat'        => 'Surabaya',
                 'no_hp'         => '08977662299',
                 'kota_asal'     => 'Jombang',
                 'role'          => 'Pemilik',
-                'password'      => Hash::make('pemilik'),
+                'password'      => Hash::make('password'),
                 'created_at'    => now(),
             ],
+            [
+                'username'      => 'andini',
+                'nama'          => 'Andini',
+                'jk'            => 'P',
+                'alamat'        => 'Jombang',
+                'no_hp'         => '08977898212',
+                'kota_asal'     => 'Bandung',
+                'role'          => 'Pemilik',
+                'password'      => Hash::make('password'),
+                'created_at'    => now(),
+            ]
         ];
 
         foreach ($userData as $key => $value) {
@@ -45,7 +56,7 @@ class DatabaseSeeder extends Seeder
         }
 
         User::factory()
-            ->count(50)
+            ->count(10)
             ->create();
     }
 }
