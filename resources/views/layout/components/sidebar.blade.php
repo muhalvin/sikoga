@@ -22,7 +22,7 @@
                     </a>
                 </li>
 
-                <li class="{{ $menu == 'Users' ? 'active' : '' }}">
+                <li class="{{ $menu == 'users' ? 'active' : '' }}">
                     <a href="{{ route('pemilik/users') }}" class="nav-link">
                         <i class="fas fa-users"></i><span>Penghuni Kos</span>
                     </a>
