@@ -18,8 +18,7 @@
 
     <!-- CSS Datatables Libraries -->
     <link rel="stylesheet" href="{{ url('assets/modules/datatables/datatables.min.css') }}">
-    <link rel="stylesheet"
-        href="{{ url('assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ url('assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
 
     <!-- Template CSS -->
@@ -97,108 +96,6 @@
     {{-- sweet alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    {{-- notifications --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
-        integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <script>
-        $(document).ready(function() {
-            $.ajax({
-                url: "{{ route('pemilik/getNotify') }}",
-                type: "GET",
-                success: function(hasil) {
-                    var obj = $.parseJSON(hasil);
-
-                    $('div#notify').html(obj);
-                    if (obj > 0) {
-                        $('#beep').addClass("beep");
-                    } else {
-                        $("#notify_hidden").css("display", "none");
-                    }
-                }
-            });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $.ajax({
-                url: "{{ route('pemilik/getPaymentNotify') }}",
-                type: "GET",
-                success: function(hasil) {
-                    var obj = $.parseJSON(hasil);
-
-                    $('div#payment_notify').html(obj);
-                    if (obj > 0) {
-                        $('#beep').addClass("beep");
-                    } else {
-                        $("#notify_hiddenly").css("display", "none");
-                    }
-                }
-            });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $.ajax({
-                url: "{{ route('pemilik/getTagihanNotif') }}",
-                type: "GET",
-                success: function(hasil) {
-                    var obj = $.parseJSON(hasil);
-
-                    $('div#tagihan_notif').html(obj);
-                    if (obj > 0) {
-                        $('#beep').addClass("beep");
-                    } else {
-                        $("#tagihanNotif").css("display", "none");
-                    }
-                }
-            });
-        });
-    </script>
-
-    {{-- Pengurus --}}
-    <script>
-        $(document).ready(function() {
-            $.ajax({
-                url: "{{ route('pengurus/getNotify') }}",
-                type: "GET",
-                success: function(hasil) {
-                    var obj = $.parseJSON(hasil);
-
-                    $('div#notif_pengurus').html(obj);
-                    if (obj > 0) {
-                        $('#beep').addClass("beep");
-                    } else {
-                        $("#notif_bar").css("display", "none");
-                    }
-                }
-            });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $.ajax({
-                url: "{{ route('pengurus/getPaymentNotify') }}",
-                type: "GET",
-                success: function(hasil) {
-                    var obj = $.parseJSON(hasil);
-
-                    $('div#payment_pengurus').html(obj);
-                    if (obj > 0) {
-                        $('#beep').addClass("beep");
-                    } else {
-                        $("#payment_bar").css("display", "none");
-                    }
-                }
-            });
-        });
-    </script>
-    {{-- /notifications --}}
-
     @if ($message = Session::get('success'))
         <script>
             Swal.fire(
@@ -217,6 +114,110 @@
                 'error'
             )
         </script>
+    @endif
+
+    {{-- notifications --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    @if (Auth::user()->role == 'Pemilik')
+        <script>
+            $(document).ready(function() {
+                $.ajax({
+                    url: "{{ route('pemilik/getNotify') }}",
+                    type: "GET",
+                    success: function(hasil) {
+                        var obj = $.parseJSON(hasil);
+
+                        $('div#notify').html(obj);
+                        if (obj > 0) {
+                            $('#beep').addClass("beep");
+                        } else {
+                            $("#notify_hidden").css("display", "none");
+                        }
+                    }
+                });
+            });
+        </script>
+
+        <script>
+            $(document).ready(function() {
+                $.ajax({
+                    url: "{{ route('pemilik/getPaymentNotify') }}",
+                    type: "GET",
+                    success: function(hasil) {
+                        var obj = $.parseJSON(hasil);
+
+                        $('div#payment_notify').html(obj);
+                        if (obj > 0) {
+                            $('#beep').addClass("beep");
+                        } else {
+                            $("#notify_hiddenly").css("display", "none");
+                        }
+                    }
+                });
+            });
+        </script>
+
+        <script>
+            $(document).ready(function() {
+                $.ajax({
+                    url: "{{ route('pemilik/getTagihanNotif') }}",
+                    type: "GET",
+                    success: function(hasil) {
+                        var obj = $.parseJSON(hasil);
+
+                        $('div#tagihan_notif').html(obj);
+                        if (obj > 0) {
+                            $('#beep').addClass("beep");
+                        } else {
+                            $("#tagihanNotif").css("display", "none");
+                        }
+                    }
+                });
+            });
+        </script>
+    @endif
+
+    @if (Auth::user()->role == 'Pengurus')
+        {{-- Pengurus --}}
+        <script>
+            $(document).ready(function() {
+                $.ajax({
+                    url: "{{ route('pengurus/getNotify') }}",
+                    type: "GET",
+                    success: function(hasil) {
+                        var obj = $.parseJSON(hasil);
+
+                        $('div#notif_pengurus').html(obj);
+                        if (obj > 0) {
+                            $('#beep').addClass("beep");
+                        } else {
+                            $("#notif_bar").css("display", "none");
+                        }
+                    }
+                });
+            });
+        </script>
+
+        <script>
+            $(document).ready(function() {
+                $.ajax({
+                    url: "{{ route('pengurus/getPaymentNotify') }}",
+                    type: "GET",
+                    success: function(hasil) {
+                        var obj = $.parseJSON(hasil);
+
+                        $('div#payment_pengurus').html(obj);
+                        if (obj > 0) {
+                            $('#beep').addClass("beep");
+                        } else {
+                            $("#payment_bar").css("display", "none");
+                        }
+                    }
+                });
+            });
+        </script>
+        {{-- /notifications --}}
     @endif
 </body>
 

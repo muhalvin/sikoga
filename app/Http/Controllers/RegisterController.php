@@ -25,8 +25,6 @@ class RegisterController extends Controller
                 'required',
                 'string',
                 Password::min(7)
-                    ->mixedCase()
-                    ->numbers()
             ],
             'password-confirm'  => 'required|same:password|string'
         ];

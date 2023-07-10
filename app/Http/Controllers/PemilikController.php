@@ -57,8 +57,8 @@ class PemilikController extends Controller
 
         $sql = pendaftaran::join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
             ->where('kos.username', '=', Auth::user()->username)
-            ->where('pendaftarans.verifikasi', '=', 1)
-            ->orWhere('pendaftarans.verifikasi', '=', 2)
+            ->where('pendaftarans.status_bayar', '=', NULL)
+            ->orWhere('pendaftarans.status_bayar', '=', 1)
             ->get();
 
         return view('pages.pemilik.dashboard.main')->with([
@@ -388,7 +388,7 @@ class PemilikController extends Controller
     public function showPembayaran()
     {
         $pendaftaran = DB::table('pendaftarans')
-            ->select('pendaftarans.id', 'pendaftarans.updated_at', 'pendaftarans.bukti_bayar', 'pendaftarans.status_bayar', 'users.nama')
+            ->select('pendaftarans.id', 'pendaftarans.updated_at', 'pendaftarans.bukti_bayar', 'pendaftarans.status_bayar', 'users.nama', 'kos.nama_kos')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
             ->join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
             ->where('pendaftarans.status_bayar', '=', 1)
@@ -439,7 +439,8 @@ class PemilikController extends Controller
     public function showTagihan()
     {
         $now = DB::table('tagihans')
-            ->select('users.nama', 'users.username', 'tagihans.id', 'tagihans.tanggal_bayar', 'tagihans.total_bayar', 'tagihans.bukti_bayar', 'tagihans.status')
+            ->select('users.nama', 'users.username', 'tagihans.id', 'tagihans.tanggal_bayar', 'tagihans.total_bayar', 'tagihans.bukti_bayar', 'tagihans.status', 'kos.nama_kos')
+            ->distinct()
             ->join('users', 'users.username', '=', 'tagihans.username')
             ->join('kos', 'kos.id', '=', 'tagihans.id_kos')
             ->join('pendaftarans', 'pendaftarans.id_kos', '=', 'tagihans.id_kos')

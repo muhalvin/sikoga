@@ -416,6 +416,7 @@ class UserController extends Controller
                 'biaya'     => $biaya->biaya,
                 'riwayat'   => $riwayat,
                 'kos'       => $kos->id_kos,
+                'nama_kos'  => $biaya->nama_kos,
             ]);
         } else {
             return view('errors.403');
