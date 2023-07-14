@@ -396,6 +396,7 @@ class PemilikController extends Controller
             ->get();
 
         $selesai = DB::table('pendaftarans')
+            ->select('pendaftarans.id', 'pendaftarans.updated_at', 'pendaftarans.bukti_bayar', 'pendaftarans.status_bayar', 'users.nama', 'kos.nama_kos')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
             ->join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
             ->where('pendaftarans.status_bayar', '!=', 1)
