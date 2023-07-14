@@ -24,7 +24,18 @@ class DatabaseSeeder extends Seeder
                 'no_hp'         => '08510012345',
                 'kota_asal'     => 'Jakarta',
                 'role'          => 'Pengurus',
-                'password'      => Hash::make('password'),
+                'password'      => Hash::make('pengurus'),
+                'created_at'    => now(),
+            ],
+            [
+                'username'      => 'budi',
+                'nama'          => 'Budi',
+                'jk'            => 'L',
+                'alamat'        => 'Jombang',
+                'no_hp'         => '08511012345',
+                'kota_asal'     => 'Jombang',
+                'role'          => 'Pengurus',
+                'password'      => Hash::make('budi'),
                 'created_at'    => now(),
             ],
             [
@@ -35,7 +46,7 @@ class DatabaseSeeder extends Seeder
                 'no_hp'         => '08977662299',
                 'kota_asal'     => 'Jombang',
                 'role'          => 'Pemilik',
-                'password'      => Hash::make('password'),
+                'password'      => Hash::make('andana'),
                 'created_at'    => now(),
             ],
             [
@@ -46,7 +57,18 @@ class DatabaseSeeder extends Seeder
                 'no_hp'         => '08977898212',
                 'kota_asal'     => 'Bandung',
                 'role'          => 'Pemilik',
-                'password'      => Hash::make('password'),
+                'password'      => Hash::make('andini'),
+                'created_at'    => now(),
+            ],
+            [
+                'username'      => 'user',
+                'nama'          => 'Pengguna',
+                'jk'            => 'L',
+                'alamat'        => 'Jombang',
+                'no_hp'         => '08977812212',
+                'kota_asal'     => 'Bandung',
+                'role'          => 'Anak Kos',
+                'password'      => Hash::make('user'),
                 'created_at'    => now(),
             ]
         ];
