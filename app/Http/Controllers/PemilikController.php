@@ -314,8 +314,9 @@ class PemilikController extends Controller
         $penghuni = pendaftaran::join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
             ->select('users.nama', 'users.no_hp' , 'kos.nama_kos', 'pendaftarans.verifikasi')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
-            ->join('tagihans', 'tagihans.username', '=', 'users.username')
+            // ->join('tagihans', 'tagihans.username', '=', 'users.username')
             ->where('kos.username', '=', Auth::user()->username)
+            ->where('pendaftarans.status_bayar', '=', 2)
             ->orderByDesc('kos.nama_kos')
             ->get();   
             
