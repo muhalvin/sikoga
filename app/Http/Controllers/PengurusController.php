@@ -113,8 +113,9 @@ class PengurusController extends Controller
     public function showPembayaran()
     {
         $pendaftaran = DB::table('pendaftarans')
-            ->select('pendaftarans.id', 'pendaftarans.updated_at', 'pendaftarans.bukti_bayar', 'pendaftarans.status_bayar', 'users.nama')
+            ->select('pendaftarans.id', 'pendaftarans.updated_at', 'pendaftarans.bukti_bayar', 'pendaftarans.status_bayar', 'users.nama', 'kos.nama_kos')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
+            ->join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
             ->where('pendaftarans.bukti_bayar', '!=', NULL)
             ->where('pendaftarans.status_bayar', '=', NULL)
             ->get();
