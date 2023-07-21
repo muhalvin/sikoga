@@ -20,8 +20,8 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama</th>
                                         <th>Nama Kos</th>
+                                        <th>Nama</th>
                                         <th>Tanggal</th>
                                         <th>Bukti Bayar</th>
                                         <th>Status</th>
@@ -33,10 +33,10 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
-                                                {{ $row->nama }}
+                                                {{ $row->nama_kos }}
                                             </td>
                                             <td>
-                                                {{ $row->nama_kos }}
+                                                {{ $row->nama }}
                                             </td>
                                             <td>
                                                 {{ $row->updated_at }}
