@@ -6,6 +6,7 @@ use App\Http\Controllers\PemilikController;
 use App\Http\Controllers\PengurusController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RegisterController;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,7 @@ use App\Http\Controllers\RegisterController;
  * 
  */
 
-Route::get('storage-link', function() {
+Route::get('storage-link', function () {
     Artisan::call('storage:link');
     return 'The links have been created.';
 });
@@ -60,7 +61,7 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
  */
 
 Route::middleware(['auth', 'akses:Anak Kos'])->group(function () {
-    
+
     // Dashboard 
     Route::get('dashboard', [UserController::class, 'index'])->name('dashboard');
     Route::get('showKos/{id}', [UserController::class, 'showKos'])->name('showKos/');
@@ -73,16 +74,14 @@ Route::middleware(['auth', 'akses:Anak Kos'])->group(function () {
     Route::post('createVerifikasi', [UserController::class, 'createVerifikasi'])->name('createVerifikasi');
     Route::post('updateVerifikasi/{id}', [UserController::class, 'updateVerifikasi'])->name('updateVerifikasi/');
     // Pembayaran
-    Route::get('pembayaran', [UserController::class, 'showPembayaran'])->name('pembayaran'); 
-    Route::post('storePembayaran', [UserController::class, 'storePembayaran'])->name('storePembayaran'); 
+    Route::get('pembayaran', [UserController::class, 'showPembayaran'])->name('pembayaran');
+    Route::post('storePembayaran', [UserController::class, 'storePembayaran'])->name('storePembayaran');
     Route::post('storePembayaranBulanan', [UserController::class, 'storePembayaranBulanan'])->name('storePembayaranBulanan');
     Route::get('nota', [UserController::class, 'showNota'])->name('nota');
     // Bayar Kos
-    Route::get('tagihan', [UserController::class, 'showTagihan'])->name('tagihan'); 
-    Route::post('storeTagihan', [UserController::class, 'storeTagihan'])->name('storeTagihan'); 
+    Route::get('tagihan', [UserController::class, 'showTagihan'])->name('tagihan');
+    Route::post('storeTagihan', [UserController::class, 'storeTagihan'])->name('storeTagihan');
     Route::get('invoice/{id}', [UserController::class, 'showInvoice'])->name('invoice/');
-
-    
 });
 
 
@@ -92,7 +91,7 @@ Route::middleware(['auth', 'akses:Anak Kos'])->group(function () {
 * 
  */
 
-Route::group(['prefix' => 'pengurus', 'middleware' => ['auth', 'akses:Pengurus'], 'as' => 'pengurus/'], function(){
+Route::group(['prefix' => 'pengurus', 'middleware' => ['auth', 'akses:Pengurus'], 'as' => 'pengurus/'], function () {
 
     Route::get('dashboard', [PengurusController::class, 'index'])->name('dashboard');
     // Pendaftaran
@@ -107,16 +106,16 @@ Route::group(['prefix' => 'pengurus', 'middleware' => ['auth', 'akses:Pengurus']
     // Notifikasi
     Route::get('getNotify', [PengurusController::class, 'showNotify'])->name('getNotify');
     Route::get('getPaymentNotify', [PengurusController::class, 'showPaymentNotify'])->name('getPaymentNotify');
-}); 
+});
 
 
- /*
+/*
  * 
  * Pemilik Routes
  * 
  */
 
-Route::group(['prefix' => 'pemilik', 'middleware' => ['auth', 'akses:Pemilik'], 'as' => 'pemilik/'], function(){
+Route::group(['prefix' => 'pemilik', 'middleware' => ['auth', 'akses:Pemilik'], 'as' => 'pemilik/'], function () {
 
     Route::get('dashboard', [PemilikController::class, 'index'])->name('dashboard');
     // Kos
@@ -144,7 +143,7 @@ Route::group(['prefix' => 'pemilik', 'middleware' => ['auth', 'akses:Pemilik'], 
     Route::get('getNotify', [PemilikController::class, 'showNotify'])->name('getNotify');
     Route::get('getPaymentNotify', [PemilikController::class, 'showPaymentNotify'])->name('getPaymentNotify');
     Route::get('getTagihanNotif', [PemilikController::class, 'showTagihanNotif'])->name('getTagihanNotif');
-}); 
+});
 
 
 

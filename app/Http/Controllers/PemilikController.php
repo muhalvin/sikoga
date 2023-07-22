@@ -8,11 +8,11 @@ use App\Models\tagihan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Charts\UsersChart;
 use App\Charts\UsersJKChart;
+use Illuminate\Support\Facades\DB;
 
 class PemilikController extends Controller
 {
@@ -20,7 +20,7 @@ class PemilikController extends Controller
     {
         $notif = pendaftaran::where('verifikasi', '=', '2')
             ->count();
-        
+
         return json_encode($notif);
     }
 
@@ -30,7 +30,7 @@ class PemilikController extends Controller
             ->where('status_bayar', '=', '1')
             ->where('kos.username', '=', Auth::user()->username)
             ->count();
-        
+
         return json_encode($notif);
     }
 
@@ -40,7 +40,7 @@ class PemilikController extends Controller
             ->where('kos.username', '=', Auth::user()->username)
             ->where('tagihans.status', '=', '1')
             ->count();
-        
+
         return json_encode($notif);
     }
 
@@ -48,14 +48,14 @@ class PemilikController extends Controller
     {
         $jml_user = User::where('role', '=', 'Anak Kos')
             ->get();
-        
+
         $jml_pengurus = User::where('role', '=', 'Pengurus')
             ->get();
 
         $penghuni = pendaftaran::join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
             ->where('kos.username', '=', Auth::user()->username)
             ->where('pendaftarans.status_bayar', '=', 2)
-            ->get();    
+            ->get();
 
         $sql = pendaftaran::join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
             ->where('kos.username', '=', Auth::user()->username)
@@ -75,7 +75,7 @@ class PemilikController extends Controller
             'jkChart'       => $usersJKChart->build(),
         ]);
     }
-    
+
     public function showKos()
     {
         $kos = DB::table('kos')
@@ -107,30 +107,32 @@ class PemilikController extends Controller
 
     public function storeKos(Request $request)
     {
-        $validates = Validator::make($request->all(), [   
-            'nama_kos'      => 'required|string',
-            'alamat'        => 'required|string',
-            'biaya'         => 'required|numeric',
-            'nomor'         => 'required|numeric',
-            'ukuran'        => 'required|string',
-            'penghuni'      => 'required|string',
-        ],
-        [
-            'nama_kos.required'     => 'Kolom harus diisi!',
-            'alamat.required'       => 'Kolom harus diisi!',
-            'biaya.required'        => 'Kolom harus diisi!',
-            'nomor.required'        => 'Kolom harus diisi!',
-            'ukuran.required'       => 'Kolom harus diisi!',
-            'penghuni.required'     => 'Kolom harus diisi!',
-        ]);
+        $validates = Validator::make(
+            $request->all(),
+            [
+                'nama_kos'      => 'required|string',
+                'alamat'        => 'required|string',
+                'biaya'         => 'required|numeric',
+                'nomor'         => 'required|numeric',
+                'ukuran'        => 'required|string',
+                'penghuni'      => 'required|string',
+            ],
+            [
+                'nama_kos.required'     => 'Kolom harus diisi!',
+                'alamat.required'       => 'Kolom harus diisi!',
+                'biaya.required'        => 'Kolom harus diisi!',
+                'nomor.required'        => 'Kolom harus diisi!',
+                'ukuran.required'       => 'Kolom harus diisi!',
+                'penghuni.required'     => 'Kolom harus diisi!',
+            ]
+        );
 
         $errors = $validates->errors();
 
         if ($validates->fails()) {
             return redirect()->back()->withErrors($validates->messages())->withInput();
+        } else {
 
-        } else { 
-            
             $user = DB::table('kos')
                 ->insert([
                     'username'      => Auth::user()->username,
@@ -142,42 +144,45 @@ class PemilikController extends Controller
                     'penghuni'      => $request->penghuni,
                     'created_at'    => now(),
                 ]);
-            
+
             return redirect()->back()->with('success', 'Kos berhasil ditambahkan!');
         }
     }
 
-    public function updateKos (Request $request, $id)
+    public function updateKos(Request $request, $id)
     {
-        $validate = Validator::make($request->all(), [
-            'nama_kos'          => 'required|string',
-            'alamat'            => 'required|string',
-            'biaya'             => 'required|numeric',
-            'nomor'             => 'required|numeric',
-            'nomor_alt'         => 'nullable|numeric',
-            'ukuran'            => 'required|string',
-            'status'            => 'required|string',
-            'fasilitas'         => 'nullable|string',
-            'peraturan'         => 'nullable|string',
-            'penghuni'          => 'required|string',
-        ],
-        [
-            'nama_kos.required'          => 'Kolom harus diisi!',
-            'alamat.required'            => 'Kolom harus diisi!',
-            'biaya.required'             => 'Kolom harus diisi!',
-            'nomor.required'             => 'Kolom harus diisi!',
-            'ukuran.required'            => 'Kolom harus diisi!',
-            'status.required'            => 'Kolom harus diisi!',
-            'penghuni.required'          => 'Kolom harus diisi!',
-        ]);
+        $validate = Validator::make(
+            $request->all(),
+            [
+                'nama_kos'          => 'required|string',
+                'alamat'            => 'required|string',
+                'biaya'             => 'required|numeric',
+                'nomor'             => 'required|numeric',
+                'nomor_alt'         => 'nullable|numeric',
+                'ukuran'            => 'required|string',
+                'status'            => 'required|string',
+                'fasilitas'         => 'nullable|string',
+                'peraturan'         => 'nullable|string',
+                'penghuni'          => 'required|string',
+            ],
+            [
+                'nama_kos.required'          => 'Kolom harus diisi!',
+                'alamat.required'            => 'Kolom harus diisi!',
+                'biaya.required'             => 'Kolom harus diisi!',
+                'nomor.required'             => 'Kolom harus diisi!',
+                'ukuran.required'            => 'Kolom harus diisi!',
+                'status.required'            => 'Kolom harus diisi!',
+                'penghuni.required'          => 'Kolom harus diisi!',
+            ]
+        );
 
         $errors = $validate->errors();
 
         if ($validate->fails()) {
-            
+
             return redirect()->back()->withErrors($validate->messages())->withInput();
         } else {
-            
+
             $kos = DB::table('kos')
                 ->where('id', '=', $id)
                 ->update([
@@ -193,43 +198,45 @@ class PemilikController extends Controller
                     'penghuni'          => $request->penghuni,
                     'updated_at'    => now(),
                 ]);
-    
+
             return redirect()->back()->with('success', 'Berhasil memperbarui data!');
         }
     }
 
     public function updateFotoKos(Request $request, $id)
     {
-        $validates = Validator::make($request->all(), [
-            'f_depan'       => 'required|mimes:png,jpg,jpeg|max:1024',
-            'f_samping'     => 'required|mimes:png,jpg,jpeg|max:1024',
-            'f_kamar_1'     => 'required|mimes:png,jpg,jpeg|max:1024',
-            'f_kamar_2'     => 'nullable|mimes:png,jpg,jpeg|max:1024',
-            'f_kamar_3'     => 'nullable|mimes:png,jpg,jpeg|max:1024',
-        ],
-        [
-            'f_depan.required'      => 'Silahkan pilih file terlebih dulu!',
-            'f_samping.required'    => 'Silahkan pilih file terlebih dulu!',
-            
-            'f_depan.mimes'     => 'File yang diunggah berupa Foto (jpg/jpeg/png)',
-            'f_samping.mimes'   => 'File yang diunggah berupa Foto (jpg/jpeg/png)',
-            'f_kamar_1.mimes'   => 'File yang diunggah berupa Foto (jpg/jpeg/png)',
-            'f_kamar_2.mimes'   => 'File yang diunggah berupa Foto (jpg/jpeg/png)',
-            'f_kamar_3.mimes'   => 'File yang diunggah berupa Foto (jpg/jpeg/png)',
+        $validates = Validator::make(
+            $request->all(),
+            [
+                'f_depan'       => 'required|mimes:png,jpg,jpeg|max:1024',
+                'f_samping'     => 'required|mimes:png,jpg,jpeg|max:1024',
+                'f_kamar_1'     => 'required|mimes:png,jpg,jpeg|max:1024',
+                'f_kamar_2'     => 'nullable|mimes:png,jpg,jpeg|max:1024',
+                'f_kamar_3'     => 'nullable|mimes:png,jpg,jpeg|max:1024',
+            ],
+            [
+                'f_depan.required'      => 'Silahkan pilih file terlebih dulu!',
+                'f_samping.required'    => 'Silahkan pilih file terlebih dulu!',
 
-            'f_depan.max'       => 'Ukuran Foto Maksimal 2 MB',
-            'f_samping.max'     => 'Ukuran Foto Maksimal 2 MB',
-            'f_kamar_1.max'     => 'Ukuran Foto Maksimal 2 MB',
-            'f_kamar_2.max'     => 'Ukuran Foto Maksimal 2 MB',
-            'f_kamar_3.max'     => 'Ukuran Foto Maksimal 2 MB',
-        ]);
+                'f_depan.mimes'     => 'File yang diunggah berupa Foto (jpg/jpeg/png)',
+                'f_samping.mimes'   => 'File yang diunggah berupa Foto (jpg/jpeg/png)',
+                'f_kamar_1.mimes'   => 'File yang diunggah berupa Foto (jpg/jpeg/png)',
+                'f_kamar_2.mimes'   => 'File yang diunggah berupa Foto (jpg/jpeg/png)',
+                'f_kamar_3.mimes'   => 'File yang diunggah berupa Foto (jpg/jpeg/png)',
+
+                'f_depan.max'       => 'Ukuran Foto Maksimal 2 MB',
+                'f_samping.max'     => 'Ukuran Foto Maksimal 2 MB',
+                'f_kamar_1.max'     => 'Ukuran Foto Maksimal 2 MB',
+                'f_kamar_2.max'     => 'Ukuran Foto Maksimal 2 MB',
+                'f_kamar_3.max'     => 'Ukuran Foto Maksimal 2 MB',
+            ]
+        );
 
         $errors = $validates->errors();
 
         if ($validates->fails()) {
             return redirect()->back()->withErrors($validates->messages())->withInput();
-
-        } else { 
+        } else {
 
             // getFile
             $file1      = $request->file('f_depan');
@@ -240,42 +247,42 @@ class PemilikController extends Controller
 
             // getClientName
             if ($file1 != NULL) {
-                $name1  = date('Y-m-d').('-').$file1->getClientOriginalName();
+                $name1  = date('Y-m-d') . ('-') . $file1->getClientOriginalName();
             } else {
                 $name1  = '';
             }
 
             if ($file2 != NULL) {
-                $name2  = date('Y-m-d').('-').$file2->getClientOriginalName();
+                $name2  = date('Y-m-d') . ('-') . $file2->getClientOriginalName();
             } else {
                 $name2  = '';
             }
 
             if ($file3 != NULL) {
-                $name3  = date('Y-m-d').('-').$file3->getClientOriginalName();
+                $name3  = date('Y-m-d') . ('-') . $file3->getClientOriginalName();
             } else {
                 $name3  = '';
             }
 
             if ($file4 != NULL) {
-                $name4  = date('Y-m-d').('-').$file4->getClientOriginalName();
+                $name4  = date('Y-m-d') . ('-') . $file4->getClientOriginalName();
             } else {
                 $name4  = '';
             }
 
             if ($file5 != NULL) {
-                $name5  = date('Y-m-d').('-').$file5->getClientOriginalName();
+                $name5  = date('Y-m-d') . ('-') . $file5->getClientOriginalName();
             } else {
                 $name5  = '';
             }
-                
+
             // getPath
-            $path1  = 'KOS/Foto/'.$name1;                  
-            $path2  = 'KOS/Foto/'.$name2;                  
-            $path3  = 'KOS/Foto/'.$name3;                  
-            $path4  = 'KOS/Foto/'.$name4;                  
-            $path5  = 'KOS/Foto/'.$name5;                  
-            
+            $path1  = 'KOS/Foto/' . $name1;
+            $path2  = 'KOS/Foto/' . $name2;
+            $path3  = 'KOS/Foto/' . $name3;
+            $path4  = 'KOS/Foto/' . $name4;
+            $path5  = 'KOS/Foto/' . $name5;
+
 
             if ($file1 != NULL) {
                 Storage::disk('public')->put($path1, file_get_contents($file1));
@@ -296,9 +303,8 @@ class PemilikController extends Controller
             if ($file5 != NULL) {
                 Storage::disk('public')->put($path5, file_get_contents($file5));
             }
-            
         }
-        
+
         $user = DB::table('kos')
             ->where('id', '=', $id)
             ->update([
@@ -316,14 +322,14 @@ class PemilikController extends Controller
     public function showUsers()
     {
         $penghuni = pendaftaran::join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
-            ->select('users.nama', 'users.no_hp' , 'kos.nama_kos', 'pendaftarans.verifikasi')
+            ->select('users.nama', 'users.no_hp', 'kos.nama_kos', 'pendaftarans.verifikasi')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
             // ->join('tagihans', 'tagihans.username', '=', 'users.username')
             ->where('kos.username', '=', Auth::user()->username)
             ->where('pendaftarans.status_bayar', '=', 2)
             ->orderByDesc('kos.nama_kos')
-            ->get();   
-            
+            ->get();
+
         return view('pages.pemilik.users.main')->with([
             'title'         => 'Penghuni Kos',
             'menu'          => 'users',
@@ -365,7 +371,7 @@ class PemilikController extends Controller
                 'verifikasi'    => 3,
                 'updated_at'    => now(),
             ]);
-            
+
         return redirect()->back()->with('success', 'Pendaftaran Diterima!');
     }
 
@@ -377,7 +383,7 @@ class PemilikController extends Controller
                 'verifikasi'    => 4,
                 'updated_at'    => now(),
             ]);
-            
+
         return redirect()->back()->with('failed', 'Pendaftaran Ditolak!');
     }
 
@@ -386,7 +392,7 @@ class PemilikController extends Controller
         $pendaftaran = DB::table('pendaftarans')
             ->where('id', '=', $id)
             ->delete();
-            
+
         return redirect()->back()->with('failed', 'Data Berhasil Dihapus!');
     }
 
@@ -426,7 +432,7 @@ class PemilikController extends Controller
                 'status_bayar'  => 2,
                 'updated_at'    => now(),
             ]);
-            
+
         return redirect()->back()->with('success', 'Pembayaran Diterima!');
     }
 
@@ -438,7 +444,7 @@ class PemilikController extends Controller
                 'status_bayar'  => 3,
                 'updated_at'    => now(),
             ]);
-            
+
         return redirect()->back()->with('failed', 'Pembayaran ditolak!');
     }
 
@@ -474,7 +480,7 @@ class PemilikController extends Controller
         ]);
     }
 
-    public function accTagihan ($id)
+    public function accTagihan($id)
     {
         $pendaftaran = DB::table('tagihans')
             ->where('id', '=', $id)
@@ -482,11 +488,11 @@ class PemilikController extends Controller
                 'status'        => 2,
                 'updated_at'    => now(),
             ]);
-            
+
         return redirect()->back()->with('success', 'Pembayaran diverifikasi!');
     }
 
-    public function tolakTagihan ($id)
+    public function tolakTagihan($id)
     {
         $pendaftaran = DB::table('tagihans')
             ->where('id', '=', $id)
@@ -494,7 +500,7 @@ class PemilikController extends Controller
                 'status'        => 3,
                 'updated_at'    => now(),
             ]);
-            
+
         return redirect()->back()->with('success', 'Pembayaran ditolak!');
     }
 }
