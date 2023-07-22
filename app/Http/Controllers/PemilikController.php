@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Charts\UsersChart;
+use App\Charts\UsersJKChart;
 
 class PemilikController extends Controller
 {
@@ -42,7 +44,7 @@ class PemilikController extends Controller
         return json_encode($notif);
     }
 
-    public function index()
+    public function index(UsersChart $usersChart, UsersJKChart $usersJKChart)
     {
         $jml_user = User::where('role', '=', 'Anak Kos')
             ->get();
@@ -69,6 +71,8 @@ class PemilikController extends Controller
             'jml_pengurus'  => $jml_pengurus,
             'penghuni'      => $penghuni,
             'pendaftar'     => $sql,
+            'chart'         => $usersChart->build(),
+            'jkChart'       => $usersJKChart->build(),
         ]);
     }
     

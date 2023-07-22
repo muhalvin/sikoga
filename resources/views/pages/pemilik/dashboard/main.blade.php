@@ -71,4 +71,25 @@
             </div>
         </div>
     </section>
+
+    <section>
+        <div class="row pl-3 pr-3" style="display: flex; justify-content: space-evenly">
+            <div class="card col-6">
+                <div class="card-body">
+                    {!! $chart->container() !!}
+                </div>
+            </div>
+            <div class="card col-6">
+                <div class="card-body">
+                    {!! $jkChart->container() !!}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="{{ $chart->cdn() }}"></script>
+    <script src="{{ $jkChart->cdn() }}"></script>
+
+    {{ $chart->script() }}
+    {{ $jkChart->script() }}
 @endsection
