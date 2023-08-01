@@ -105,4 +105,44 @@
         {{-- /detail kos --}}
 
     </section>
+
+    <section>
+        <div class="card">
+            <div class="card-header">
+                <h6>Daftar Penghuni</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="table-2">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Nomor HP</th>
+                                <th>KOS</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($penghuni as $row)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $row->nama }}</td>
+                                    <td>{{ $row->no_hp }}</td>
+                                    <td>{{ $row->nama_kos }}</td>
+                                    <td>
+                                        @if ($row->verifikasi == 3)
+                                            <div class="badge badge-success">Terverifikasi</div>
+                                        @else
+                                            <div class="badge badge-danger">Belum Terverifikasi</div>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection

@@ -75,11 +75,20 @@ class PengurusController extends Controller
             ->where('kos.id', '=', $id)
             ->get();
 
+        $penghuni = pendaftaran::join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
+            ->select('users.nama', 'users.no_hp', 'kos.nama_kos', 'pendaftarans.verifikasi')
+            ->join('users', 'users.username', '=', 'pendaftarans.username')
+            ->where('kos.id', '=', $id)
+            ->where('pendaftarans.status_bayar', '=', 2)
+            ->orderByDesc('kos.nama_kos')
+            ->get();
+
         return view('pages.pengurus.dashboard.more')->with([
             'title'     => 'Dashboard',
             'menu'      => 'Dashboard',
             'submenu'   => '',
             'kos'       => $sql,
+            'penghuni'  => $penghuni,
         ]);
     }
 
