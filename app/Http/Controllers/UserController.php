@@ -48,41 +48,44 @@ class UserController extends Controller
         $user = DB::table('users')
             ->where('username', '=', Auth::user()->username)
             ->get();
-                
+
         return view('pages.user.profile.main')->with([
             'title'     => 'Profile',
             'menu'      => 'Profile',
-            'submenu'   => '', 
+            'submenu'   => '',
             'user'      => $user,
         ]);
     }
 
     public function updateProfile(Request $request)
     {
-        $validate = Validator::make($request->all(), [
-            'nama'          => 'required|string',
-            'jk'            => 'required|string',
-            'tgl_lahir'     => 'required|date',
-            'alamat'        => 'required|string',
-            'no_hp'         => 'required|numeric',
-            'kota_asal'     => 'required|string',
-        ],
-        [
-            'nama.required'         => 'Kolom harus diisi!',
-            'jk.required'           => 'Kolom harus diisi!',
-            'tgl_lahir.required'    => 'Kolom harus diisi!',
-            'no_hp.required'        => 'Kolom harus diisi!',
-            'kota_asal.required'    => 'Kolom harus diisi!',
-            'alamat.required'       => 'Kolom harus diisi!',
-        ]);
+        $validate = Validator::make(
+            $request->all(),
+            [
+                'nama'          => 'required|string',
+                'jk'            => 'required|string',
+                'tgl_lahir'     => 'required|date',
+                'alamat'        => 'required|string',
+                'no_hp'         => 'required|numeric',
+                'kota_asal'     => 'required|string',
+            ],
+            [
+                'nama.required'         => 'Kolom harus diisi!',
+                'jk.required'           => 'Kolom harus diisi!',
+                'tgl_lahir.required'    => 'Kolom harus diisi!',
+                'no_hp.required'        => 'Kolom harus diisi!',
+                'kota_asal.required'    => 'Kolom harus diisi!',
+                'alamat.required'       => 'Kolom harus diisi!',
+            ]
+        );
 
         $errors = $validate->errors();
 
         if ($validate->fails()) {
-            
+
             return redirect()->back()->withErrors($validate->messages())->withInput();
         } else {
-            
+
             $user = DB::table('users')
                 ->where('username', '=', Auth::user()->username)
                 ->update([
@@ -94,45 +97,46 @@ class UserController extends Controller
                     'kota_asal'     => $request->kota_asal,
                     'updated_at'    => now(),
                 ]);
-    
+
             return redirect()->back()->with('success', 'Profile anda telah diperbarui!');
         }
     }
 
     public function updateFoto(Request $request)
     {
-        $validates = Validator::make($request->all(), [
-            'foto'          => 'required|mimes:png,jpg,jpeg|max:2048',
-        ],
-        [
-            'foto.required' => 'Silahkan pilih file terlebih dulu!',
-            
-            'foto.max'      => 'Ukuran Foto Maksimal 2 MB',
-        ]);
+        $validates = Validator::make(
+            $request->all(),
+            [
+                'foto'          => 'required|mimes:png,jpg,jpeg|max:2048',
+            ],
+            [
+                'foto.required' => 'Silahkan pilih file terlebih dulu!',
+
+                'foto.max'      => 'Ukuran Foto Maksimal 2 MB',
+            ]
+        );
 
         $errors = $validates->errors();
 
         if ($validates->fails()) {
             return redirect()->back()->withErrors($validates->messages())->withInput();
-
-        } else { 
+        } else {
 
             $foto           = $request->file('foto');
 
             if ($foto == NULL) {
                 $fileFoto   = '';
             } else {
-                $fileFoto   = date('Y-m-d').$foto->getClientOriginalName();
+                $fileFoto   = date('Y-m-d') . $foto->getClientOriginalName();
             }
 
-            $foto_path      = 'profiles/pict/'.$fileFoto;                   
-            
+            $foto_path      = 'profiles/pict/' . $fileFoto;
+
             if ($foto != NULL) {
                 Storage::disk('public')->put($foto_path, file_get_contents($foto));
             }
-            
         }
-        
+
         $user = DB::table('users')
             ->where('username', '=', Auth::user()->username)
             ->update([
@@ -151,58 +155,59 @@ class UserController extends Controller
             ->where('username', '=', Auth::user()->username)
             ->orderBy('id', 'DESC')
             ->first();
-        
+
         $pendaftaran = DB::table('pendaftarans')
             ->where('username', '=', Auth::user()->username)
             ->orderBy('id', 'DESC')
             ->get();
-            
+
         return view('pages.user.pendaftaran.verifikasi.main')->with([
             'title'         => 'Verifikasi',
             'menu'          => 'Pendaftaran',
             'submenu'       => 'Verifikasi',
-            'username'      => $username, 
-            'pendaftaran'   => $pendaftaran,  
-            'verify'        => $verify,  
+            'username'      => $username,
+            'pendaftaran'   => $pendaftaran,
+            'verify'        => $verify,
         ]);
     }
 
     public function createVerifikasi(Request $request)
     {
-        $validates = Validator::make($request->all(), [
-            'username'          => 'required|string',   
-            'surat_ket'         => 'required|mimes:png,jpg,jpeg|max:2048',
-        ],
-        [
-            'username'          => 'Username anda kosong, silahkan reload halaman!',
-            'surat_ket.required'=> 'Silahkan pilih file terlebih dulu!',
-            
-            'surat_ket.max'     => 'Ukuran Maksimal 2 MB',
-        ]);
+        $validates = Validator::make(
+            $request->all(),
+            [
+                'username'          => 'required|string',
+                'surat_ket'         => 'required|mimes:png,jpg,jpeg|max:2048',
+            ],
+            [
+                'username'          => 'Username anda kosong, silahkan reload halaman!',
+                'surat_ket.required' => 'Silahkan pilih file terlebih dulu!',
+
+                'surat_ket.max'     => 'Ukuran Maksimal 2 MB',
+            ]
+        );
 
         $errors = $validates->errors();
 
         if ($validates->fails()) {
             return redirect()->back()->withErrors($validates->messages())->withInput();
-
-        } else { 
+        } else {
 
             $surat_ket          = $request->file('surat_ket');
 
             if ($surat_ket == NULL) {
                 $fileSurat      = '';
             } else {
-                $fileSurat      = date('Y-m-d').$surat_ket->getClientOriginalName();
+                $fileSurat      = date('Y-m-d') . $surat_ket->getClientOriginalName();
             }
 
-            $surat_ket_path     = 'Pendaftaran/SRT/'.$fileSurat;                   
-            
+            $surat_ket_path     = 'Pendaftaran/SRT/' . $fileSurat;
+
             if ($surat_ket != NULL) {
                 Storage::disk('public')->put($surat_ket_path, file_get_contents($surat_ket));
             }
-            
         }
-        
+
         $user = DB::table('pendaftarans')
             ->where('username', '=', Auth::user()->username)
             ->insert([
@@ -217,39 +222,41 @@ class UserController extends Controller
 
     public function updateVerifikasi(Request $request, $id)
     {
-        $validates = Validator::make($request->all(), [
-            'username'          => 'required|string',   
-            'surat_ket'         => 'required|mimes:png,jpg,jpeg|max:2048',
-        ],
-        [
-            'username'          => 'Username anda kosong, silahkan reload halaman!',
-            'surat_ket.required'=> 'Silahkan pilih file terlebih dulu!',
-            
-            'surat_ket.max'     => 'Ukuran Maksimal 2 MB',
-        ]);
+        $validates = Validator::make(
+            $request->all(),
+            [
+                'username'          => 'required|string',
+                'surat_ket'         => 'required|mimes:png,jpg,jpeg|max:2048',
+            ],
+            [
+                'username'          => 'Username anda kosong, silahkan reload halaman!',
+                'surat_ket.required' => 'Silahkan pilih file terlebih dulu!',
+
+                'surat_ket.max'     => 'Ukuran Maksimal 2 MB',
+            ]
+        );
 
         $errors = $validates->errors();
 
         if ($validates->fails()) {
             return redirect()->back()->withErrors($validates->messages())->withInput();
-
-        } else { 
+        } else {
 
             $surat_ket          = $request->file('surat_ket');
 
             if ($surat_ket == NULL) {
                 $fileSurat      = '';
             } else {
-                $fileSurat      = date('Y-m-d').$surat_ket->getClientOriginalName();
+                $fileSurat      = date('Y-m-d') . $surat_ket->getClientOriginalName();
             }
 
-            $surat_ket_path     = 'Pendaftaran/SRT/'.$fileSurat;                   
-            
+            $surat_ket_path     = 'Pendaftaran/SRT/' . $fileSurat;
+
             if ($surat_ket != NULL) {
                 Storage::disk('public')->put($surat_ket_path, file_get_contents($surat_ket));
-            }   
+            }
         }
-        
+
         $user = DB::table('pendaftarans')
             ->where('id', '=', $id)
             ->update([
@@ -270,8 +277,8 @@ class UserController extends Controller
 
         $sql = DB::table('kos')
             ->where('status', '=', 'Tersedia')
-            ->get();   
-            
+            ->get();
+
         $kos_terdaftar = DB::table('kos')
             ->join('pendaftarans', 'pendaftarans.id_kos', '=', 'kos.id')
             ->where('pendaftarans.username', '=', Auth::user()->username)
@@ -309,69 +316,71 @@ class UserController extends Controller
             ->join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
             ->join('users', 'users.username', '=', 'kos.username')
             ->where('pendaftarans.username', '=', Auth::user()->username)
-            ->get();    
+            ->get();
 
         return view('pages.user.pendaftaran.pembayaran.main')->with([
             'title'     => 'Pembayaran',
             'menu'      => 'Pendaftaran',
             'submenu'   => 'Pembayaran',
-            'kos'       => $kos, 
-            'verif'     => $verif,  
-            'verify'    => $verified,  
-            'tolak'     => $tolak,  
-            'verifikasi'=> $verify,  
+            'kos'       => $kos,
+            'verif'     => $verif,
+            'verify'    => $verified,
+            'tolak'     => $tolak,
+            'verifikasi' => $verify,
             'daftar'    => $pendaftaran,
-            'list'      => $sql,  
-            'kos_in'    => $kos_terdaftar,  
+            'list'      => $sql,
+            'kos_in'    => $kos_terdaftar,
         ]);
     }
 
     public function storePembayaran(Request $request)
     {
-        $validates = Validator::make($request->all(), [
-            'kos_id'            => 'required|numeric',
-            'bukti_bayar'       => 'required|mimes:png,jpg,jpeg|max:2048',
-        ],
-        [
-            'kos_id.required'       => 'Kolom harus diisi!',
-            'bukti_bayar.required'  => 'Kolom harus diisi!',
-            
-            'bukti_bayar.max'       => 'Ukuran Maksimal 2 MB',
-        ]);
+        $validates = Validator::make(
+            $request->all(),
+            [
+                'kos_id'            => 'required|numeric',
+                'bukti_bayar'       => 'required|mimes:png,jpg,jpeg|max:2048',
+            ],
+            [
+                'kos_id.required'       => 'Kolom harus diisi!',
+                'bukti_bayar.required'  => 'Kolom harus diisi!',
+
+                'bukti_bayar.max'       => 'Ukuran Maksimal 2 MB',
+            ]
+        );
 
         $errors = $validates->errors();
 
         if ($validates->fails()) {
             return redirect()->back()->withErrors($validates->messages())->withInput();
-
-        } else { 
+        } else {
 
             $file   = $request->file('bukti_bayar');
-            
-            $name   = date('Y-m-d').('-').$file->getClientOriginalName();
-            
-            $path   = 'Pembayaran/'.$name;                   
+
+            $name   = date('Y-m-d') . ('-') . $file->getClientOriginalName();
+
+            $path   = 'Pembayaran/' . $name;
 
             Storage::disk('public')->put($path, file_get_contents($file));
-        
-        
-        $user = DB::table('pendaftarans')
-            ->where('username', '=', Auth::user()->username)
-            ->update([
-                'id_kos'        => $request->kos_id,
-                'bukti_bayar'   => $name,
-                'status_bayar'  => NULL,
-                'updated_at'    => now(),
-            ]);
 
-        return redirect()->back()->with('success', 'Pembayaran berhasil diunggah!');
+
+            $user = DB::table('pendaftarans')
+                ->where('username', '=', Auth::user()->username)
+                ->update([
+                    'id_kos'        => $request->kos_id,
+                    'bukti_bayar'   => $name,
+                    'status_bayar'  => NULL,
+                    'updated_at'    => now(),
+                ]);
+
+            return redirect()->back()->with('success', 'Pembayaran berhasil diunggah!');
         }
     }
 
     public function showNota()
     {
         $username = Auth::user()->username;
-        
+
         $sql = DB::table('pendaftarans')
             ->select('pendaftarans.id', 'pendaftarans.username', 'pendaftarans.status_bayar as status', 'pendaftarans.created_at as tanggal_bayar', 'kos.biaya as total_bayar', 'kos.alamat', 'kos.nama_kos', 'kos.alamat as alamat_kos', 'kos.biaya', 'kos.nomor', 'users.nama')
             ->join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
@@ -401,8 +410,8 @@ class UserController extends Controller
         $kos = DB::table('pendaftarans')
             ->join('users', 'users.username', '=', 'pendaftarans.username')
             ->where('users.username', '=', Auth::user()->username)
-            ->first();   
-            
+            ->first();
+
         $pendaftaran = DB::table('pendaftarans')
             ->where('username', '=', Auth::user()->username)
             ->where('status_bayar', '=', '2')
@@ -420,55 +429,57 @@ class UserController extends Controller
             ]);
         } else {
             return view('errors.403');
-        } 
+        }
     }
 
     public function storeTagihan(Request $request)
     {
-        $validates = Validator::make($request->all(), [
-            'id_kos'            => 'required|numeric',
-            'tanggal_bayar'     => 'required|string',
-            'total_bayar'       => 'required|string',
-            'bukti_bayar'       => 'required|mimes:png,jpg,jpeg|max:2048',
-        ],
-        [
-            'id_kos.required'       => 'Kolom harus diisi!',
-            'tanggal_bayar.required'=> 'Kolom harus diisi!',
-            'total_bayar.required'  => 'Kolom harus diisi!',
-            'bukti_bayar.required'  => 'Kolom harus diisi!',
-            
-            'bukti_bayar.max'       => 'Ukuran Maksimal 2 MB',
-        ]);
+        $validates = Validator::make(
+            $request->all(),
+            [
+                'id_kos'            => 'required|numeric',
+                'tanggal_bayar'     => 'required|string',
+                'total_bayar'       => 'required|string',
+                'bukti_bayar'       => 'required|mimes:png,jpg,jpeg|max:2048',
+            ],
+            [
+                'id_kos.required'       => 'Kolom harus diisi!',
+                'tanggal_bayar.required' => 'Kolom harus diisi!',
+                'total_bayar.required'  => 'Kolom harus diisi!',
+                'bukti_bayar.required'  => 'Kolom harus diisi!',
+
+                'bukti_bayar.max'       => 'Ukuran Maksimal 2 MB',
+            ]
+        );
 
         $errors = $validates->errors();
 
         if ($validates->fails()) {
             return redirect()->back()->withErrors($validates->messages())->withInput();
-
-        } else { 
+        } else {
 
             $file   = $request->file('bukti_bayar');
-            
-            $name   = date('Y-m-d').('-').$file->getClientOriginalName();
-            
-            $path   = 'Tagihan/KOS/'.$name;                   
+
+            $name   = date('Y-m-d') . ('-') . $file->getClientOriginalName();
+
+            $path   = 'Tagihan/KOS/' . $name;
 
             Storage::disk('public')->put($path, file_get_contents($file));
-        
-        
-        $user = DB::table('tagihans')
-            ->insert([
-                'username'      => Auth::user()->username,
-                'id_kos'        => $request->id_kos,
-                'tanggal_bayar' => $request->tanggal_bayar,
-                'total_bayar'   => $request->total_bayar,
-                'bukti_bayar'   => $name,
-                'status'        => 1,
-                'created_at'    => now(),
-                'updated_at'    => now(),
-            ]);
 
-        return redirect()->back()->with('success', 'Anda Telah Membayar Tagihan Bulan Ini!');
+
+            $user = DB::table('tagihans')
+                ->insert([
+                    'username'      => Auth::user()->username,
+                    'id_kos'        => $request->id_kos,
+                    'tanggal_bayar' => $request->tanggal_bayar,
+                    'total_bayar'   => $request->total_bayar,
+                    'bukti_bayar'   => $name,
+                    'status'        => 1,
+                    'created_at'    => now(),
+                    'updated_at'    => now(),
+                ]);
+
+            return redirect()->back()->with('success', 'Anda Telah Membayar Tagihan Bulan Ini!');
         }
     }
 

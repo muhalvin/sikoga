@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\GenderpenghuniChart;
+use App\Charts\UsersChart;
+use App\Charts\UsersPengurusChart;
 use App\Models\pendaftaran;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,7 +17,7 @@ class PengurusController extends Controller
     {
         $notif = pendaftaran::where('verifikasi', '=', '1')
             ->count();
-        
+
         return json_encode($notif);
     }
 
@@ -23,22 +26,29 @@ class PengurusController extends Controller
         $notif = pendaftaran::where('bukti_bayar', '!=', NULL)
             ->where('status_bayar', '=', NULL)
             ->count();
-        
+
         return json_encode($notif);
     }
 
-    public function index()
+    public function index(UsersPengurusChart $usersChart, GenderpenghuniChart $genderChart)
     {
         $jml_user = User::where('role', '=', 'Anak Kos')
             ->get();
-        
+
         $jml_pengurus = User::where('role', '=', 'Pengurus')
+            ->get();
+
+        $pemilik = User::where('role', '=', 'Pemilik')
             ->get();
 
         $penghuni = pendaftaran::join('kos', 'kos.id', '=', 'pendaftarans.id_kos')
             ->join('users', 'users.username', '=', 'kos.username')
             ->where('pendaftarans.status_bayar', '=', 2)
-            ->get();    
+            ->get();
+
+        $kos = DB::table('kos')
+            ->where('status', '=', 'Tersedia')
+            ->get();
 
         $sql = DB::table('pendaftarans')->where('status_bayar', '=', NULL)->orWhere('status_bayar', '=', '1')->get();
 
@@ -48,8 +58,28 @@ class PengurusController extends Controller
             'submenu'       => '',
             'jml_user'      => $jml_user,
             'jml_pengurus'  => $jml_pengurus,
+            'pemilik'       => $pemilik,
             'penghuni'      => $penghuni,
             'pendaftar'     => $sql,
+            'kos'           => $kos,
+            'usersChart'    => $usersChart->build(),
+            'genderChart'   => $genderChart->build(),
+        ]);
+    }
+
+    public function showKos($id)
+    {
+        $sql = DB::table('kos')
+            ->join('users', 'users.username', '=', 'kos.username')
+            ->where('kos.status', '=', 'Tersedia')
+            ->where('kos.id', '=', $id)
+            ->get();
+
+        return view('pages.pengurus.dashboard.more')->with([
+            'title'     => 'Dashboard',
+            'menu'      => 'Dashboard',
+            'submenu'   => '',
+            'kos'       => $sql,
         ]);
     }
 
@@ -85,7 +115,7 @@ class PengurusController extends Controller
                 'verifikasi'    => 2,
                 'updated_at'    => now(),
             ]);
-            
+
         return redirect()->back()->with('success', 'Pendaftaran Disetujui!');
     }
 
@@ -97,7 +127,7 @@ class PengurusController extends Controller
                 'verifikasi'    => 4,
                 'updated_at'    => now(),
             ]);
-            
+
         return redirect()->back()->with('failed', 'Pendaftaran Ditolak!');
     }
 
@@ -106,7 +136,7 @@ class PengurusController extends Controller
         $pendaftaran = DB::table('pendaftarans')
             ->where('id', '=', $id)
             ->delete();
-            
+
         return redirect()->back()->with('success', 'Data Berhasil Dihapus!');
     }
 
@@ -144,7 +174,7 @@ class PengurusController extends Controller
                 'status_bayar'  => 1,
                 'updated_at'    => now(),
             ]);
-            
+
         return redirect()->back()->with('success', 'Pembayaran Diterima!');
     }
 
@@ -156,7 +186,7 @@ class PengurusController extends Controller
                 'status_bayar'  => 3,
                 'updated_at'    => now(),
             ]);
-            
+
         return redirect()->back()->with('failed', 'Pembayaran ditolak!');
     }
 }

@@ -94,6 +94,7 @@ Route::middleware(['auth', 'akses:Anak Kos'])->group(function () {
 Route::group(['prefix' => 'pengurus', 'middleware' => ['auth', 'akses:Pengurus'], 'as' => 'pengurus/'], function () {
 
     Route::get('dashboard', [PengurusController::class, 'index'])->name('dashboard');
+    Route::get('showKos/{id}', [PengurusController::class, 'showKos'])->name('showKos/');
     // Pendaftaran
     Route::get('verifikasi', [PengurusController::class, 'showVerifikasi'])->name('verifikasi');
     Route::get('updateVerifikasi/{id}', [PengurusController::class, 'updateVerifikasi'])->name('updateVerifikasi/');
